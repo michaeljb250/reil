@@ -163,11 +163,11 @@ const freightHubs = {
 } as GeoJSON.FeatureCollection<GeoJSON.Point>
 
 const populationUrl =
-  'https://raw.githubusercontent.com/michaeljb250/reil/refs/heads/main/geopop.json'
+  'public/geopop.json'
 const motorwayUrl =
-  'https://raw.githubusercontent.com/michaeljb250/reil/refs/heads/main/uk_motorway_access_network.json'
+  'public/uk_motorway_access_network.json'
 const marketUrl =
-  'https://raw.githubusercontent.com/michaeljb250/reil/refs/heads/main/uk_il_market_data.json'
+  'public/uk_il_market_data.json'
 
 export default function UkPopulationMap() {
   const mapContainerRef = useRef<HTMLDivElement | null>(null)
