@@ -12,20 +12,6 @@ type PopulationArea = {
   population: number | string
 }
 
-type MotorwayPoint = {
-  code: string
-  name: string
-  lat: number | string
-  lng: number | string
-  road: string
-  junction: string
-  corridor: string
-  nation: string
-  region: string
-  strategic: string | boolean
-  freight_relevance: string
-}
-
 type MarketRow = {
   region: string
   vacancy_rate_current_pct?: number
@@ -79,6 +65,19 @@ type InfrastructureProjectProperties = {
   distance_km?: number
 }
 
+type MotorwayJunctionProperties = {
+  fid?: number
+  id?: string
+  junction_number?: string
+  name?: string
+}
+
+type ScotlandPopulationProperties = {
+  DataZone?: string
+  Name?: string
+  TotPop2011?: number | string
+}
+
 type NearestMotorwayAnalysis = {
   point: GeoJSON.Feature<GeoJSON.Point>
   name: string
@@ -87,6 +86,7 @@ type NearestMotorwayAnalysis = {
   corridor: string
   region: string
   nation: string
+  distanceKm: number
 }
 
 type InfrastructureAnalysis = {
@@ -96,7 +96,8 @@ type InfrastructureAnalysis = {
 }
 
 const populationUrl = '/geopop.json'
-const motorwayUrl = '/uk_motorway_access_network.json'
+const scotlandPopulationUrl = '/scoto.geojson'
+const motorwayJunctionsUrl = '/motorjunctions.geojson'
 const marketUrl = '/uk_il_market_data.json'
 const freightHubsUrl = '/uk_freight_hubs.json'
 const infrastructureProjectsUrl = '/uk_major_infrastructure_projects.json'
@@ -149,7 +150,8 @@ export default function UkPopulationMap() {
 
       try {
         const [
-          populationData,
+          englandWalesPopulationData,
+          scotlandPopulationData,
           motorwayData,
           marketData,
           freightHubsData,
@@ -157,15 +159,19 @@ export default function UkPopulationMap() {
         ] = await Promise.all([
           fetch(populationUrl).then(async (r) => {
             if (!r.ok) throw new Error(`Population data request failed: ${r.status}`)
-            return r.json()
+            return (await r.json()) as PopulationArea[]
           }),
-          fetch(motorwayUrl).then(async (r) => {
-            if (!r.ok) throw new Error(`Motorway data request failed: ${r.status}`)
-            return r.json()
+          fetch(scotlandPopulationUrl).then(async (r) => {
+            if (!r.ok) throw new Error(`Scotland population request failed: ${r.status}`)
+            return (await r.json()) as GeoJSON.FeatureCollection<GeoJSON.Point>
+          }),
+          fetch(motorwayJunctionsUrl).then(async (r) => {
+            if (!r.ok) throw new Error(`Motorway junctions request failed: ${r.status}`)
+            return (await r.json()) as GeoJSON.FeatureCollection<GeoJSON.Point>
           }),
           fetch(marketUrl).then(async (r) => {
             if (!r.ok) throw new Error(`Market data request failed: ${r.status}`)
-            return r.json()
+            return (await r.json()) as MarketRow[]
           }),
           fetch(freightHubsUrl).then(async (r) => {
             if (!r.ok) throw new Error(`Freight hubs data request failed: ${r.status}`)
@@ -177,8 +183,16 @@ export default function UkPopulationMap() {
           })
         ])
 
-        const populationGeoJSON = convertPopulationToGeoJSON(populationData)
-        const motorwayGeoJSON = convertMotorwaysToGeoJSON(motorwayData)
+        const scotlandPopulationRows =
+          convertScotlandGeoJSONToPopulationRows(scotlandPopulationData)
+
+        const combinedPopulationRows = [
+          ...englandWalesPopulationData,
+          ...scotlandPopulationRows
+        ]
+
+        const populationGeoJSON = convertPopulationToGeoJSON(combinedPopulationRows)
+        const motorwayGeoJSON = motorwayData
         const freightHubsGeoJSON = freightHubsData
         const infrastructureProjectsGeoJSON = infrastructureProjectsData
 
@@ -189,8 +203,21 @@ export default function UkPopulationMap() {
         marketDataRef.current = marketData
 
         addPopulationSourceAndLayer(map, populationGeoJSON)
+        addMotorwayJunctionsSourceAndLayer(map, motorwayGeoJSON)
         addFreightHubsSourceAndLayer(map, freightHubsGeoJSON)
         addInfrastructureProjectsSourceAndLayer(map, infrastructureProjectsGeoJSON)
+
+        map.on('click', 'motorway-junctions-layer', (e) => {
+          const feature = e.features?.[0]
+          if (!feature || feature.geometry.type !== 'Point') return
+
+          const geometry = feature.geometry as GeoJSON.Point
+          const coordinates = [...geometry.coordinates] as [number, number]
+          const properties = (feature.properties || {}) as MotorwayJunctionProperties
+
+          showMotorwayJunctionPopup(map, coordinates, properties)
+          setResultHtml(buildMotorwayJunctionSidebarHtml(properties))
+        })
 
         map.on('click', 'freight-hubs-layer', (e) => {
           const feature = e.features?.[0]
@@ -210,11 +237,18 @@ export default function UkPopulationMap() {
 
           const geometry = feature.geometry as GeoJSON.Point
           const coordinates = [...geometry.coordinates] as [number, number]
-          const properties =
-            (feature.properties || {}) as InfrastructureProjectProperties
+          const properties = (feature.properties || {}) as InfrastructureProjectProperties
 
           showInfrastructureProjectPopup(map, coordinates, properties)
           setResultHtml(buildInfrastructureProjectSidebarHtml(properties))
+        })
+
+        map.on('mouseenter', 'motorway-junctions-layer', () => {
+          map.getCanvas().style.cursor = 'pointer'
+        })
+
+        map.on('mouseleave', 'motorway-junctions-layer', () => {
+          map.getCanvas().style.cursor = ''
         })
 
         map.on('mouseenter', 'freight-hubs-layer', () => {
@@ -234,7 +268,7 @@ export default function UkPopulationMap() {
         })
 
         setResultHtml(
-          'Data loaded. Search an address or postcode, click the map, or click a freight hub or infrastructure project.'
+          'Data loaded. Search an address or postcode, click the map, or click a motorway junction, freight hub, or infrastructure project.'
         )
         setIsReady(true)
       } catch (error) {
@@ -244,16 +278,19 @@ export default function UkPopulationMap() {
     })
 
     map.on('click', async (e) => {
+      const clickedMotorwayJunction = map.queryRenderedFeatures(e.point, {
+        layers: ['motorway-junctions-layer']
+      })
+      if (clickedMotorwayJunction.length) return
+
       const clickedFreightHub = map.queryRenderedFeatures(e.point, {
         layers: ['freight-hubs-layer']
       })
-
       if (clickedFreightHub.length) return
 
       const clickedInfrastructureProject = map.queryRenderedFeatures(e.point, {
         layers: ['infrastructure-projects-layer']
       })
-
       if (clickedInfrastructureProject.length) return
 
       if (
@@ -438,6 +475,37 @@ export default function UkPopulationMap() {
       .addTo(map)
   }
 
+  function showMotorwayJunctionPopup(
+    map: mapboxgl.Map,
+    coordinates: [number, number],
+    properties: MotorwayJunctionProperties
+  ) {
+    const junction = properties?.junction_number || properties?.name || 'Unknown junction'
+    const roadMatch = String(junction).match(/^([A-Z0-9()\/-]+)\s/)
+    const road = roadMatch ? roadMatch[1] : 'N/A'
+
+    activePopupRef.current?.remove()
+    activePopupRef.current = new mapboxgl.Popup()
+      .setLngLat(coordinates)
+      .setHTML(`
+        <div class="popup-card">
+          <div class="popup-card__label">Motorway junction</div>
+          <div class="popup-card__title">${junction}</div>
+
+          <div class="popup-line">
+            <span>Road</span>
+            <strong>${road}</strong>
+          </div>
+
+          <div class="popup-line">
+            <span>Junction</span>
+            <strong>${junction}</strong>
+          </div>
+        </div>
+      `)
+      .addTo(map)
+  }
+
   function showFreightHubPopup(
     map: mapboxgl.Map,
     coordinates: [number, number],
@@ -589,6 +657,28 @@ export default function UkPopulationMap() {
   )
 }
 
+function convertScotlandGeoJSONToPopulationRows(geojson: any): PopulationArea[] {
+  console.log('convertScotlandGeoJSONToPopulationRows input:', geojson)
+
+  if (!geojson || !Array.isArray(geojson.features)) {
+    console.error('Invalid Scotland GeoJSON:', geojson)
+    return []
+  }
+
+  return geojson.features.map((feature: any) => {
+    const [lng, lat] = feature.geometry.coordinates
+    const properties = feature.properties || {}
+
+    return {
+      code: String(properties.DataZone || ''),
+      name: String(properties.Name || ''),
+      lat: Number(lat),
+      lng: Number(lng),
+      population: Number(properties.TotPop2011 || 0)
+    }
+  })
+}
+
 function convertPopulationToGeoJSON(data: PopulationArea[]) {
   return {
     type: 'FeatureCollection',
@@ -602,30 +692,6 @@ function convertPopulationToGeoJSON(data: PopulationArea[]) {
         code: area.code,
         name: area.name,
         population: Number(area.population)
-      }
-    }))
-  } as GeoJSON.FeatureCollection<GeoJSON.Point>
-}
-
-function convertMotorwaysToGeoJSON(data: MotorwayPoint[]) {
-  return {
-    type: 'FeatureCollection',
-    features: data.map((point) => ({
-      type: 'Feature',
-      geometry: {
-        type: 'Point',
-        coordinates: [Number(point.lng), Number(point.lat)]
-      },
-      properties: {
-        code: point.code,
-        name: point.name,
-        road: point.road,
-        junction: point.junction,
-        corridor: point.corridor,
-        nation: point.nation,
-        region: point.region,
-        strategic: point.strategic,
-        freight_relevance: point.freight_relevance
       }
     }))
   } as GeoJSON.FeatureCollection<GeoJSON.Point>
@@ -673,6 +739,33 @@ function addPopulationSourceAndLayer(
         'circle-opacity': 0.35,
         'circle-stroke-color': '#ffffff',
         'circle-stroke-width': 0.5
+      }
+    })
+  }
+}
+
+function addMotorwayJunctionsSourceAndLayer(
+  map: mapboxgl.Map,
+  motorwayGeoJSON: GeoJSON.FeatureCollection<GeoJSON.Point>
+) {
+  if (!map.getSource('motorway-junctions')) {
+    map.addSource('motorway-junctions', {
+      type: 'geojson',
+      data: motorwayGeoJSON
+    })
+  }
+
+  if (!map.getLayer('motorway-junctions-layer')) {
+    map.addLayer({
+      id: 'motorway-junctions-layer',
+      type: 'circle',
+      source: 'motorway-junctions',
+      paint: {
+        'circle-radius': 4,
+        'circle-color': '#111827',
+        'circle-stroke-color': '#ffffff',
+        'circle-stroke-width': 1,
+        'circle-opacity': 0.9
       }
     })
   }
@@ -949,14 +1042,26 @@ function calculateNearestMotorwayAccess(
     motorwayGeoJSON as any
   ) as GeoJSON.Feature<GeoJSON.Point>
 
+  const distanceKm = turf.distance(sitePoint, nearest, { units: 'kilometers' })
+
+  const junction = String(
+    nearest.properties?.junction_number ||
+      nearest.properties?.name ||
+      'N/A'
+  )
+
+  const roadMatch = junction.match(/^([A-Z0-9()\/-]+)\s/)
+  const road = roadMatch ? roadMatch[1] : 'N/A'
+
   return {
     point: nearest,
-    name: String(nearest.properties?.name || 'N/A'),
-    road: String(nearest.properties?.road || 'N/A'),
-    junction: String(nearest.properties?.junction || 'N/A'),
-    corridor: String(nearest.properties?.corridor || 'N/A'),
-    region: String(nearest.properties?.region || 'N/A'),
-    nation: String(nearest.properties?.nation || 'N/A')
+    name: junction,
+    road,
+    junction,
+    corridor: 'N/A',
+    region: 'N/A',
+    nation: 'N/A',
+    distanceKm
   }
 }
 
@@ -1122,6 +1227,39 @@ function fitToIsochrones(map: mapboxgl.Map, isochrones: any) {
   if (!bounds.isEmpty()) {
     map.fitBounds(bounds, { padding: 40 })
   }
+}
+
+function buildMotorwayJunctionSidebarHtml(properties: MotorwayJunctionProperties) {
+  const junction = properties?.junction_number || properties?.name || 'Unknown junction'
+  const roadMatch = String(junction).match(/^([A-Z0-9()\/-]+)\s/)
+  const road = roadMatch ? roadMatch[1] : 'N/A'
+
+  return `
+    <div class="results-shell">
+      <div class="hero-card">
+        <div class="hero-card__label">Motorway junction</div>
+        <div class="hero-card__title">${junction}</div>
+        <div class="hero-card__meta">
+          <span class="hero-chip">${road}</span>
+        </div>
+      </div>
+
+      <div class="result-section">
+        <div class="section-heading">Junction details</div>
+        <div class="market-grid">
+          <div class="data-tile">
+            <span class="data-tile__label">Junction</span>
+            <span class="data-tile__value">${junction}</span>
+          </div>
+
+          <div class="data-tile">
+            <span class="data-tile__label">Road</span>
+            <span class="data-tile__value">${road}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  `
 }
 
 function buildFreightHubSidebarHtml(properties: FreightHubProperties) {
@@ -1307,12 +1445,12 @@ function buildResultsHtml({
   const hubs30List = freightAnalysis[30]?.hubs || []
   const hubs60List = freightAnalysis[60]?.hubs || []
 
-  const motorwayName = motorwayAnalysis.name || 'N/A'
   const motorwayRoad = motorwayAnalysis.road || 'N/A'
   const motorwayJunction = motorwayAnalysis.junction || 'N/A'
-  const motorwayCorridor = motorwayAnalysis.corridor || 'N/A'
-  const motorwayRegion = motorwayAnalysis.region || 'N/A'
-  const motorwayNation = motorwayAnalysis.nation || 'N/A'
+  const motorwayDistance =
+    typeof motorwayAnalysis.distanceKm === 'number'
+      ? `${motorwayAnalysis.distanceKm.toFixed(1)} km`
+      : 'N/A'
 
   const nearestProject = infrastructureAnalysis?.nearest || null
   const nearestProjectName = nearestProject?.properties?.name || 'None'
@@ -1469,15 +1607,11 @@ function buildResultsHtml({
         </div>
 
         <div class="result-section">
-          <div class="section-heading">Nearest motorway</div>
+          <div class="section-heading">Nearest motorway junction</div>
           <div class="info-card">
-            <div class="info-card__title">
-              ${motorwayName} (${motorwayRoad}${
-                motorwayJunction !== 'N/A' ? ` J${motorwayJunction}` : ''
-              })
-            </div>
-            <div class="info-card__sub">${motorwayCorridor}</div>
-            <div class="info-card__meta">${motorwayRegion}, ${motorwayNation}</div>
+            <div class="info-card__title">${motorwayJunction}</div>
+            <div class="info-card__sub">Road: ${motorwayRoad}</div>
+            <div class="info-card__meta">Distance: ${motorwayDistance}</div>
           </div>
         </div>
 

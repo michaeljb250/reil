@@ -1,6 +1,6 @@
 {
 "type": "FeatureCollection",
-"name": "georod",
+"name": "motorjunctions",
 "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
 "features": [
 { "type": "Feature", "properties": { "fid": 1, "id": "19210E14-95F7-422F-95E7-8EA181DA0838", "junction_number": "A1(M) J45" }, "geometry": { "type": "Point", "coordinates": [ -1.379104786687599, 53.907089588749976 ] } },
