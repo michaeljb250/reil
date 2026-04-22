@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from 'react'
 import mapboxgl from 'mapbox-gl'
-import 'mapbox-gl/dist/mapbox-gl.css'
 import * as turf from '@turf/turf'
 
 type PopulationArea = {
@@ -23,7 +22,7 @@ type MotorwayPoint = {
   corridor: string
   nation: string
   region: string
-  strategic: string
+  strategic: string | boolean
   freight_relevance: string
 }
 
@@ -51,123 +50,56 @@ type MarketRow = {
   foreign_investment_last_year_rank?: number
 }
 
-const freightHubs = {
-  type: 'FeatureCollection',
-  features: [
-    {
-      type: 'Feature',
-      properties: { id: 'dover', name: 'Port of Dover', category: 'port', subtype: 'ro_ro', region: 'South East' },
-      geometry: { type: 'Point', coordinates: [1.313, 51.129] }
-    },
-    {
-      type: 'Feature',
-      properties: { id: 'felixstowe', name: 'Port of Felixstowe', category: 'port', subtype: 'container', region: 'East of England' },
-      geometry: { type: 'Point', coordinates: [1.311, 51.955] }
-    },
-    {
-      type: 'Feature',
-      properties: { id: 'southampton', name: 'Port of Southampton', category: 'port', subtype: 'container', region: 'South East' },
-      geometry: { type: 'Point', coordinates: [-1.404, 50.899] }
-    },
-    {
-      type: 'Feature',
-      properties: { id: 'london_gateway', name: 'London Gateway', category: 'port', subtype: 'deep_sea', region: 'Greater London' },
-      geometry: { type: 'Point', coordinates: [0.484, 51.503] }
-    },
-    {
-      type: 'Feature',
-      properties: { id: 'tilbury', name: 'Port of Tilbury', category: 'port', subtype: 'mixed', region: 'Greater London' },
-      geometry: { type: 'Point', coordinates: [0.355, 51.462] }
-    },
-    {
-      type: 'Feature',
-      properties: { id: 'liverpool', name: 'Port of Liverpool', category: 'port', subtype: 'container', region: 'North West' },
-      geometry: { type: 'Point', coordinates: [-3.007, 53.445] }
-    },
-    {
-      type: 'Feature',
-      properties: { id: 'hull', name: 'Port of Hull', category: 'port', subtype: 'ro_ro', region: 'Yorkshire' },
-      geometry: { type: 'Point', coordinates: [-0.327, 53.744] }
-    },
-    {
-      type: 'Feature',
-      properties: { id: 'immingham', name: 'Port of Immingham', category: 'port', subtype: 'bulk', region: 'Yorkshire' },
-      geometry: { type: 'Point', coordinates: [-0.186, 53.617] }
-    },
-    {
-      type: 'Feature',
-      properties: { id: 'teesport', name: 'Teesport', category: 'port', subtype: 'bulk', region: 'North East' },
-      geometry: { type: 'Point', coordinates: [-1.183, 54.616] }
-    },
-    {
-      type: 'Feature',
-      properties: { id: 'bristol', name: 'Port of Bristol (Avonmouth)', category: 'port', subtype: 'mixed', region: 'South West' },
-      geometry: { type: 'Point', coordinates: [-2.699, 51.504] }
-    },
-    {
-      type: 'Feature',
-      properties: { id: 'grangemouth', name: 'Port of Grangemouth', category: 'port', subtype: 'container', region: 'Scotland' },
-      geometry: { type: 'Point', coordinates: [-3.718, 56.011] }
-    },
-    {
-      type: 'Feature',
-      properties: { id: 'heathrow', name: 'Heathrow Airport', category: 'airport', subtype: 'cargo_hub', region: 'Greater London' },
-      geometry: { type: 'Point', coordinates: [-0.4543, 51.47] }
-    },
-    {
-      type: 'Feature',
-      properties: { id: 'east_midlands_airport', name: 'East Midlands Airport', category: 'airport', subtype: 'cargo_hub', region: 'East Midlands' },
-      geometry: { type: 'Point', coordinates: [-1.328, 52.831] }
-    },
-    {
-      type: 'Feature',
-      properties: { id: 'stansted', name: 'London Stansted Airport', category: 'airport', subtype: 'cargo_hub', region: 'East of England' },
-      geometry: { type: 'Point', coordinates: [0.235, 51.885] }
-    },
-    {
-      type: 'Feature',
-      properties: { id: 'luton', name: 'London Luton Airport', category: 'airport', subtype: 'cargo_hub', region: 'East of England' },
-      geometry: { type: 'Point', coordinates: [-0.3683, 51.8747] }
-    },
-    {
-      type: 'Feature',
-      properties: { id: 'manchester_airport', name: 'Manchester Airport', category: 'airport', subtype: 'cargo_hub', region: 'North West' },
-      geometry: { type: 'Point', coordinates: [-2.275, 53.353] }
-    },
-    {
-      type: 'Feature',
-      properties: { id: 'dirft', name: 'DIRFT (Daventry)', category: 'rail_terminal', subtype: 'srfi', region: 'East Midlands' },
-      geometry: { type: 'Point', coordinates: [-1.178, 52.272] }
-    },
-    {
-      type: 'Feature',
-      properties: { id: 'east_midlands_gateway', name: 'East Midlands Gateway', category: 'rail_terminal', subtype: 'srfi', region: 'East Midlands' },
-      geometry: { type: 'Point', coordinates: [-1.327, 52.831] }
-    },
-    {
-      type: 'Feature',
-      properties: { id: 'iport_doncaster', name: 'iPort Doncaster', category: 'rail_terminal', subtype: 'srfi', region: 'Yorkshire' },
-      geometry: { type: 'Point', coordinates: [-1.123, 53.52] }
-    },
-    {
-      type: 'Feature',
-      properties: { id: 'hams_hall', name: 'Hams Hall Rail Freight Terminal', category: 'rail_terminal', subtype: 'intermodal', region: 'West Midlands' },
-      geometry: { type: 'Point', coordinates: [-1.735, 52.519] }
-    },
-    {
-      type: 'Feature',
-      properties: { id: 'trafford_park_terminal', name: 'Trafford Park Rail Terminal', category: 'rail_terminal', subtype: 'intermodal', region: 'North West' },
-      geometry: { type: 'Point', coordinates: [-2.333, 53.466] }
-    }
-  ]
-} as GeoJSON.FeatureCollection<GeoJSON.Point>
+type FreightHubProperties = {
+  name?: string
+  category?: string
+  subtype?: string
+  region?: string
+  nation?: string
+  operator?: string
+  corridor?: string
+}
 
-const populationUrl =
-  '/geopop.json'
-const motorwayUrl =
-  '/uk_motorway_access_network.json'
-const marketUrl =
-  '/uk_il_market_data.json'
+type InfrastructureProjectProperties = {
+  id?: string
+  name?: string
+  category?: string
+  subtype?: string
+  stage?: string
+  status_label?: string
+  promoter?: string
+  region?: string
+  nation?: string
+  corridor?: string
+  expected_completion?: string
+  description?: string
+  source_name?: string
+  source_key?: string
+  last_checked?: string
+  distance_km?: number
+}
+
+type NearestMotorwayAnalysis = {
+  point: GeoJSON.Feature<GeoJSON.Point>
+  name: string
+  road: string
+  junction: string
+  corridor: string
+  region: string
+  nation: string
+}
+
+type InfrastructureAnalysis = {
+  nearest: GeoJSON.Feature<GeoJSON.Point> | null
+  within25km: GeoJSON.Feature<GeoJSON.Point>[]
+  within50km: GeoJSON.Feature<GeoJSON.Point>[]
+}
+
+const populationUrl = '/geopop.json'
+const motorwayUrl = '/uk_motorway_access_network.json'
+const marketUrl = '/uk_il_market_data.json'
+const freightHubsUrl = '/uk_freight_hubs.json'
+const infrastructureProjectsUrl = '/uk_major_infrastructure_projects.json'
 
 export default function UkPopulationMap() {
   const mapContainerRef = useRef<HTMLDivElement | null>(null)
@@ -175,12 +107,15 @@ export default function UkPopulationMap() {
   const siteMarkerRef = useRef<mapboxgl.Marker | null>(null)
   const activePopupRef = useRef<mapboxgl.Popup | null>(null)
 
-  const [postcode, setPostcode] = useState('')
+  const [searchText, setSearchText] = useState('')
   const [resultHtml, setResultHtml] = useState('Loading map...')
   const [isReady, setIsReady] = useState(false)
 
   const populationGeoJSONRef = useRef<GeoJSON.FeatureCollection<GeoJSON.Point> | null>(null)
   const motorwayGeoJSONRef = useRef<GeoJSON.FeatureCollection<GeoJSON.Point> | null>(null)
+  const freightHubsGeoJSONRef = useRef<GeoJSON.FeatureCollection<GeoJSON.Point> | null>(null)
+  const infrastructureProjectsGeoJSONRef =
+    useRef<GeoJSON.FeatureCollection<GeoJSON.Point> | null>(null)
   const marketDataRef = useRef<MarketRow[]>([])
 
   useEffect(() => {
@@ -204,39 +139,103 @@ export default function UkPopulationMap() {
     mapRef.current = map
     map.addControl(new mapboxgl.NavigationControl())
 
-    const ukBounds: [number, number][] = [
+    const ukBounds: [[number, number], [number, number]] = [
       [-8.8, 49.8],
       [2.1, 60.9]
     ]
 
     map.on('load', async () => {
-      map.fitBounds(ukBounds as [[number, number], [number, number]], { padding: 20 })
+      map.fitBounds(ukBounds, { padding: 20 })
 
       try {
-        const [populationData, motorwayData, marketData] = await Promise.all([
-          fetch(populationUrl).then((r) => {
+        const [
+          populationData,
+          motorwayData,
+          marketData,
+          freightHubsData,
+          infrastructureProjectsData
+        ] = await Promise.all([
+          fetch(populationUrl).then(async (r) => {
             if (!r.ok) throw new Error(`Population data request failed: ${r.status}`)
             return r.json()
           }),
-          fetch(motorwayUrl).then((r) => {
+          fetch(motorwayUrl).then(async (r) => {
             if (!r.ok) throw new Error(`Motorway data request failed: ${r.status}`)
             return r.json()
           }),
-          fetch(marketUrl).then((r) => {
+          fetch(marketUrl).then(async (r) => {
             if (!r.ok) throw new Error(`Market data request failed: ${r.status}`)
             return r.json()
           }),
+          fetch(freightHubsUrl).then(async (r) => {
+            if (!r.ok) throw new Error(`Freight hubs data request failed: ${r.status}`)
+            return (await r.json()) as GeoJSON.FeatureCollection<GeoJSON.Point>
+          }),
+          fetch(infrastructureProjectsUrl).then(async (r) => {
+            if (!r.ok) throw new Error(`Infrastructure projects request failed: ${r.status}`)
+            return (await r.json()) as GeoJSON.FeatureCollection<GeoJSON.Point>
+          })
         ])
 
-        populationGeoJSONRef.current = convertPopulationToGeoJSON(populationData)
-        motorwayGeoJSONRef.current = convertMotorwaysToGeoJSON(motorwayData)
+        const populationGeoJSON = convertPopulationToGeoJSON(populationData)
+        const motorwayGeoJSON = convertMotorwaysToGeoJSON(motorwayData)
+        const freightHubsGeoJSON = freightHubsData
+        const infrastructureProjectsGeoJSON = infrastructureProjectsData
+
+        populationGeoJSONRef.current = populationGeoJSON
+        motorwayGeoJSONRef.current = motorwayGeoJSON
+        freightHubsGeoJSONRef.current = freightHubsGeoJSON
+        infrastructureProjectsGeoJSONRef.current = infrastructureProjectsGeoJSON
         marketDataRef.current = marketData
 
-        addPopulationSourceAndLayer(map, populationGeoJSONRef.current)
-        addFreightHubsSourceAndLayer(map)
-        addMotorwayAccessSourceAndLayer(map, motorwayGeoJSONRef.current)
+        addPopulationSourceAndLayer(map, populationGeoJSON)
+        addFreightHubsSourceAndLayer(map, freightHubsGeoJSON)
+        addInfrastructureProjectsSourceAndLayer(map, infrastructureProjectsGeoJSON)
 
-        setResultHtml('Data loaded. Search a postcode or click the map.')
+        map.on('click', 'freight-hubs-layer', (e) => {
+          const feature = e.features?.[0]
+          if (!feature || feature.geometry.type !== 'Point') return
+
+          const geometry = feature.geometry as GeoJSON.Point
+          const coordinates = [...geometry.coordinates] as [number, number]
+          const properties = (feature.properties || {}) as FreightHubProperties
+
+          showFreightHubPopup(map, coordinates, properties)
+          setResultHtml(buildFreightHubSidebarHtml(properties))
+        })
+
+        map.on('click', 'infrastructure-projects-layer', (e) => {
+          const feature = e.features?.[0]
+          if (!feature || feature.geometry.type !== 'Point') return
+
+          const geometry = feature.geometry as GeoJSON.Point
+          const coordinates = [...geometry.coordinates] as [number, number]
+          const properties =
+            (feature.properties || {}) as InfrastructureProjectProperties
+
+          showInfrastructureProjectPopup(map, coordinates, properties)
+          setResultHtml(buildInfrastructureProjectSidebarHtml(properties))
+        })
+
+        map.on('mouseenter', 'freight-hubs-layer', () => {
+          map.getCanvas().style.cursor = 'pointer'
+        })
+
+        map.on('mouseleave', 'freight-hubs-layer', () => {
+          map.getCanvas().style.cursor = ''
+        })
+
+        map.on('mouseenter', 'infrastructure-projects-layer', () => {
+          map.getCanvas().style.cursor = 'pointer'
+        })
+
+        map.on('mouseleave', 'infrastructure-projects-layer', () => {
+          map.getCanvas().style.cursor = ''
+        })
+
+        setResultHtml(
+          'Data loaded. Search an address or postcode, click the map, or click a freight hub or infrastructure project.'
+        )
         setIsReady(true)
       } catch (error) {
         console.error(error)
@@ -245,7 +244,27 @@ export default function UkPopulationMap() {
     })
 
     map.on('click', async (e) => {
-      if (!populationGeoJSONRef.current || !motorwayGeoJSONRef.current || !marketDataRef.current.length) return
+      const clickedFreightHub = map.queryRenderedFeatures(e.point, {
+        layers: ['freight-hubs-layer']
+      })
+
+      if (clickedFreightHub.length) return
+
+      const clickedInfrastructureProject = map.queryRenderedFeatures(e.point, {
+        layers: ['infrastructure-projects-layer']
+      })
+
+      if (clickedInfrastructureProject.length) return
+
+      if (
+        !populationGeoJSONRef.current ||
+        !motorwayGeoJSONRef.current ||
+        !freightHubsGeoJSONRef.current ||
+        !infrastructureProjectsGeoJSONRef.current ||
+        !marketDataRef.current.length
+      ) {
+        return
+      }
 
       setResultHtml('Calculating drive-time reach for clicked location...')
 
@@ -254,27 +273,55 @@ export default function UkPopulationMap() {
         const lat = e.lngLat.lat
 
         addOrMoveSiteMarker(map, lng, lat)
-        const isochrones = await getDriveTimeIsochrones(lng, lat)
+        clearMotorwayRoute(map)
+
+        const [isochrones, searchResult] = await Promise.all([
+          getDriveTimeIsochrones(lng, lat),
+          reverseGeocodeWithMapbox(lng, lat)
+        ])
+
         drawIsochrones(map, isochrones)
 
         const populationAnalysis = calculateDriveTimePopulations(
           isochrones,
           populationGeoJSONRef.current
         )
-        const freightAnalysis = calculateDriveTimeFreightHubs(isochrones, freightHubs)
-        const motorwayAnalysis = await calculateNearestMotorwayAccess(lng, lat, motorwayGeoJSONRef.current)
 
-        drawMotorwayRoute(map, motorwayAnalysis.routeGeometry)
+        const freightAnalysis = calculateDriveTimeFreightHubs(
+          isochrones,
+          freightHubsGeoJSONRef.current
+        )
+
+        const motorwayAnalysis = calculateNearestMotorwayAccess(
+          lng,
+          lat,
+          motorwayGeoJSONRef.current
+        )
+
+        const infrastructureAnalysis = calculateNearbyInfrastructureProjects(
+          lng,
+          lat,
+          infrastructureProjectsGeoJSONRef.current
+        )
+
+        const regionName =
+          searchResult.regionName || getRegionFromCoordinates(lng, lat)
+
+        const regionalMarket = getMarketDataByRegion(
+          regionName,
+          marketDataRef.current
+        )
 
         const html = buildResultsHtml({
-          label: 'Clicked location',
+          label: searchResult.label || 'Clicked location',
           lng,
           lat,
           populationAnalysis,
           freightAnalysis,
           motorwayAnalysis,
-          regionalMarket: null,
-          regionName: null
+          infrastructureAnalysis,
+          regionalMarket,
+          regionName
         })
 
         setResultHtml(html.sidebar)
@@ -282,7 +329,9 @@ export default function UkPopulationMap() {
         fitToIsochrones(map, isochrones)
       } catch (error) {
         console.error(error)
-        setResultHtml('<span style="color:red;">Could not calculate drive-time reach for that location.</span>')
+        setResultHtml(
+          '<span style="color:red;">Could not calculate drive-time reach for that location.</span>'
+        )
       }
     })
 
@@ -297,25 +346,31 @@ export default function UkPopulationMap() {
   async function handleSearch() {
     if (!mapRef.current) return
 
-    const value = postcode.trim()
-    if (!value) {
-      setResultHtml('<span style="color:red;">Please enter a postcode.</span>')
-      return
-    }
-
-    if (!populationGeoJSONRef.current || !motorwayGeoJSONRef.current || !marketDataRef.current.length) {
+    if (
+      !populationGeoJSONRef.current ||
+      !motorwayGeoJSONRef.current ||
+      !freightHubsGeoJSONRef.current ||
+      !infrastructureProjectsGeoJSONRef.current ||
+      !marketDataRef.current.length
+    ) {
       setResultHtml('<span style="color:red;">Data is not ready yet.</span>')
       return
     }
 
-    setResultHtml('Searching postcode and calculating drive-time reach...')
+    const value = searchText.trim()
+    if (!value) {
+      setResultHtml('<span style="color:red;">Please enter an address or postcode.</span>')
+      return
+    }
+
+    setResultHtml('Searching location and calculating drive-time reach...')
 
     try {
-      const postcodeData = await lookupPostcode(value)
-      const lng = postcodeData.longitude
-      const lat = postcodeData.latitude
+      const searchResult = await forwardGeocodeWithMapbox(value)
+      const { lng, lat } = searchResult
 
       addOrMoveSiteMarker(mapRef.current, lng, lat)
+      clearMotorwayRoute(mapRef.current)
 
       const isochrones = await getDriveTimeIsochrones(lng, lat)
       drawIsochrones(mapRef.current, isochrones)
@@ -324,21 +379,40 @@ export default function UkPopulationMap() {
         isochrones,
         populationGeoJSONRef.current
       )
-      const freightAnalysis = calculateDriveTimeFreightHubs(isochrones, freightHubs)
-      const motorwayAnalysis = await calculateNearestMotorwayAccess(lng, lat, motorwayGeoJSONRef.current)
 
-      drawMotorwayRoute(mapRef.current, motorwayAnalysis.routeGeometry)
+      const freightAnalysis = calculateDriveTimeFreightHubs(
+        isochrones,
+        freightHubsGeoJSONRef.current
+      )
 
-      const regionName = getRegionFromPostcodeData(postcodeData)
-      const regionalMarket = getMarketDataByRegion(regionName, marketDataRef.current)
+      const motorwayAnalysis = calculateNearestMotorwayAccess(
+        lng,
+        lat,
+        motorwayGeoJSONRef.current
+      )
+
+      const infrastructureAnalysis = calculateNearbyInfrastructureProjects(
+        lng,
+        lat,
+        infrastructureProjectsGeoJSONRef.current
+      )
+
+      const regionName =
+        searchResult.regionName || getRegionFromCoordinates(lng, lat)
+
+      const regionalMarket = getMarketDataByRegion(
+        regionName,
+        marketDataRef.current
+      )
 
       const html = buildResultsHtml({
-        label: postcodeData.postcode,
+        label: searchResult.label,
         lng,
         lat,
         populationAnalysis,
         freightAnalysis,
         motorwayAnalysis,
+        infrastructureAnalysis,
         regionalMarket,
         regionName
       })
@@ -348,7 +422,11 @@ export default function UkPopulationMap() {
       fitToIsochrones(mapRef.current, isochrones)
     } catch (error) {
       console.error(error)
-      setResultHtml(`<span style="color:red;">${error instanceof Error ? error.message : 'Search failed.'}</span>`)
+      setResultHtml(
+        `<span style="color:red;">${
+          error instanceof Error ? error.message : 'Search failed.'
+        }</span>`
+      )
     }
   }
 
@@ -357,6 +435,122 @@ export default function UkPopulationMap() {
     activePopupRef.current = new mapboxgl.Popup()
       .setLngLat(coordinates)
       .setHTML(html)
+      .addTo(map)
+  }
+
+  function showFreightHubPopup(
+    map: mapboxgl.Map,
+    coordinates: [number, number],
+    properties: FreightHubProperties
+  ) {
+    const name = properties?.name || 'Unknown freight hub'
+    const category = properties?.category || 'N/A'
+    const subtype = properties?.subtype || 'N/A'
+    const region = properties?.region || 'N/A'
+    const nation = properties?.nation || 'N/A'
+    const operator = properties?.operator || 'N/A'
+    const corridor = properties?.corridor || 'N/A'
+
+    activePopupRef.current?.remove()
+    activePopupRef.current = new mapboxgl.Popup()
+      .setLngLat(coordinates)
+      .setHTML(`
+        <div class="popup-card">
+          <div class="popup-card__label">Freight hub</div>
+          <div class="popup-card__title">${name}</div>
+
+          <div class="popup-line">
+            <span>Category</span>
+            <strong>${String(category).replace(/_/g, ' ')}</strong>
+          </div>
+
+          <div class="popup-line">
+            <span>Subtype</span>
+            <strong>${String(subtype).replace(/_/g, ' ')}</strong>
+          </div>
+
+          <div class="popup-line">
+            <span>Region</span>
+            <strong>${region}</strong>
+          </div>
+
+          <div class="popup-line">
+            <span>Nation</span>
+            <strong>${nation}</strong>
+          </div>
+
+          <div class="popup-line">
+            <span>Operator</span>
+            <strong>${operator}</strong>
+          </div>
+
+          <div class="popup-line">
+            <span>Corridor</span>
+            <strong>${corridor}</strong>
+          </div>
+        </div>
+      `)
+      .addTo(map)
+  }
+
+  function showInfrastructureProjectPopup(
+    map: mapboxgl.Map,
+    coordinates: [number, number],
+    properties: InfrastructureProjectProperties
+  ) {
+    const name = properties?.name || 'Unknown project'
+    const category = properties?.category || 'N/A'
+    const subtype = properties?.subtype || 'N/A'
+    const stage = properties?.stage || 'N/A'
+    const statusLabel = properties?.status_label || 'N/A'
+    const promoter = properties?.promoter || 'N/A'
+    const region = properties?.region || 'N/A'
+    const expectedCompletion = properties?.expected_completion || 'N/A'
+
+    activePopupRef.current?.remove()
+    activePopupRef.current = new mapboxgl.Popup()
+      .setLngLat(coordinates)
+      .setHTML(`
+        <div class="popup-card">
+          <div class="popup-card__label">Infrastructure project</div>
+          <div class="popup-card__title">${name}</div>
+
+          <div class="popup-line">
+            <span>Category</span>
+            <strong>${String(category).replace(/_/g, ' ')}</strong>
+          </div>
+
+          <div class="popup-line">
+            <span>Subtype</span>
+            <strong>${String(subtype).replace(/_/g, ' ')}</strong>
+          </div>
+
+          <div class="popup-line">
+            <span>Stage</span>
+            <strong>${String(stage).replace(/_/g, ' ')}</strong>
+          </div>
+
+          <div class="popup-line">
+            <span>Status</span>
+            <strong>${statusLabel}</strong>
+          </div>
+
+          <div class="popup-line">
+            <span>Promoter</span>
+            <strong>${promoter}</strong>
+          </div>
+
+          <div class="popup-line">
+            <span>Region</span>
+            <strong>${region}</strong>
+          </div>
+
+          <div class="popup-line">
+            <span>Expected completion</span>
+            <strong>${expectedCompletion}</strong>
+          </div>
+        </div>
+      `)
       .addTo(map)
   }
 
@@ -376,10 +570,10 @@ export default function UkPopulationMap() {
       <div className="search-panel">
         <input
           type="text"
-          placeholder="Enter UK postcode"
+          placeholder="Enter UK address or postcode"
           autoComplete="off"
-          value={postcode}
-          onChange={(e) => setPostcode(e.target.value)}
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === 'Enter') handleSearch()
           }}
@@ -484,11 +678,14 @@ function addPopulationSourceAndLayer(
   }
 }
 
-function addFreightHubsSourceAndLayer(map: mapboxgl.Map) {
+function addFreightHubsSourceAndLayer(
+  map: mapboxgl.Map,
+  freightHubsGeoJSON: GeoJSON.FeatureCollection<GeoJSON.Point>
+) {
   if (!map.getSource('freight-hubs')) {
     map.addSource('freight-hubs', {
       type: 'geojson',
-      data: freightHubs
+      data: freightHubsGeoJSON
     })
   }
 
@@ -522,44 +719,150 @@ function addFreightHubsSourceAndLayer(map: mapboxgl.Map) {
   }
 }
 
-function addMotorwayAccessSourceAndLayer(
+function addInfrastructureProjectsSourceAndLayer(
   map: mapboxgl.Map,
-  motorwayGeoJSON: GeoJSON.FeatureCollection<GeoJSON.Point>
+  infrastructureProjectsGeoJSON: GeoJSON.FeatureCollection<GeoJSON.Point>
 ) {
-  if (!map.getSource('motorway-access')) {
-    map.addSource('motorway-access', {
+  if (!map.getSource('infrastructure-projects')) {
+    map.addSource('infrastructure-projects', {
       type: 'geojson',
-      data: motorwayGeoJSON
+      data: infrastructureProjectsGeoJSON
     })
   }
 
-  if (!map.getLayer('motorway-access-layer')) {
+  if (!map.getLayer('infrastructure-projects-layer')) {
     map.addLayer({
-      id: 'motorway-access-layer',
+      id: 'infrastructure-projects-layer',
       type: 'circle',
-      source: 'motorway-access',
+      source: 'infrastructure-projects',
       paint: {
-        'circle-radius': 5,
-        'circle-color': '#111827',
+        'circle-radius': [
+          'match',
+          ['get', 'category'],
+          'road', 8,
+          'rail', 8,
+          'energy', 8,
+          7
+        ],
+        'circle-color': [
+          'match',
+          ['get', 'category'],
+          'road', '#2563eb',
+          'rail', '#7c3aed',
+          'energy', '#dc2626',
+          '#6b7280'
+        ],
         'circle-stroke-color': '#ffffff',
-        'circle-stroke-width': 1.2,
-        'circle-opacity': 0.9
+        'circle-stroke-width': 1.75,
+        'circle-opacity': 0.95
       }
     })
   }
 }
 
-async function lookupPostcode(postcode: string) {
-  const response = await fetch(
-    `https://api.postcodes.io/postcodes/${encodeURIComponent(postcode)}`
-  )
+function clearMotorwayRoute(map: mapboxgl.Map) {
+  if (map.getLayer('motorway-route-line')) map.removeLayer('motorway-route-line')
+  if (map.getSource('motorway-route')) map.removeSource('motorway-route')
+}
 
-  if (!response.ok) throw new Error('Postcode lookup failed.')
+async function forwardGeocodeWithMapbox(query: string) {
+  const url =
+    `https://api.mapbox.com/search/geocode/v6/forward` +
+    `?q=${encodeURIComponent(query)}` +
+    `&country=GB` +
+    `&limit=1` +
+    `&access_token=${mapboxgl.accessToken}`
+
+  const response = await fetch(url)
+  if (!response.ok) throw new Error('Address/postcode lookup failed.')
 
   const data = await response.json()
-  if (!data.result) throw new Error('Postcode not found.')
+  const feature = data.features?.[0]
+  if (!feature) throw new Error('Location not found.')
 
-  return data.result
+  const [lng, lat] = feature.geometry.coordinates
+
+  return {
+    label:
+      feature.properties?.full_address ||
+      feature.properties?.name ||
+      feature.properties?.place_formatted ||
+      query,
+    lng,
+    lat,
+    regionName: extractRegionFromMapboxFeature(feature)
+  }
+}
+
+async function reverseGeocodeWithMapbox(lng: number, lat: number) {
+  const url =
+    `https://api.mapbox.com/search/geocode/v6/reverse` +
+    `?longitude=${encodeURIComponent(lng)}` +
+    `&latitude=${encodeURIComponent(lat)}` +
+    `&country=GB` +
+    `&limit=1` +
+    `&access_token=${mapboxgl.accessToken}`
+
+  const response = await fetch(url)
+
+  if (!response.ok) {
+    return {
+      label: 'Clicked location',
+      lng,
+      lat,
+      regionName: null as string | null
+    }
+  }
+
+  const data = await response.json()
+  const feature = data.features?.[0]
+
+  return {
+    label:
+      feature?.properties?.full_address ||
+      feature?.properties?.name ||
+      feature?.properties?.place_formatted ||
+      'Clicked location',
+    lng,
+    lat,
+    regionName: feature ? extractRegionFromMapboxFeature(feature) : null
+  }
+}
+
+function extractRegionFromMapboxFeature(feature: any): string | null {
+  const texts: string[] = []
+
+  const push = (value: unknown) => {
+    if (typeof value === 'string' && value.trim()) texts.push(value.trim())
+  }
+
+  push(feature?.properties?.context?.country?.name)
+  push(feature?.properties?.context?.region?.name)
+  push(feature?.properties?.context?.region?.region_code)
+  push(feature?.properties?.context?.district?.name)
+  push(feature?.properties?.context?.place?.name)
+  push(feature?.properties?.place_formatted)
+  push(feature?.properties?.full_address)
+  push(feature?.properties?.name)
+
+  const joined = texts.join(' | ').toLowerCase()
+
+  if (joined.includes('scotland')) return 'Scotland'
+  if (joined.includes('wales')) return 'Wales'
+  if (joined.includes('northern ireland')) return 'Northern Ireland'
+
+  if (joined.includes('london')) return 'London'
+  if (joined.includes('south east')) return 'South East'
+  if (joined.includes('south west')) return 'South West'
+  if (joined.includes('east midlands')) return 'East Midlands'
+  if (joined.includes('west midlands')) return 'West Midlands'
+  if (joined.includes('north west')) return 'North West'
+  if (joined.includes('north east')) return 'North East'
+  if (joined.includes('yorkshire')) return 'Yorkshire'
+  if (joined.includes('east of england')) return 'East of England'
+  if (joined.includes('east anglia')) return 'East of England'
+
+  return null
 }
 
 async function getDriveTimeIsochrones(lng: number, lat: number) {
@@ -581,11 +884,17 @@ function calculateDriveTimePopulations(
 
   isochronesGeoJSON.features.forEach((feature: any) => {
     const minutes = Number(feature.properties.contour)
-    const matchedPoints = turf.pointsWithinPolygon(populationPointsGeoJSON as any, feature as any)
+    const matchedPoints = turf.pointsWithinPolygon(
+      populationPointsGeoJSON as any,
+      feature as any
+    )
 
-    const totalPopulation = matchedPoints.features.reduce((sum: number, pointFeature: any) => {
-      return sum + Number(pointFeature.properties.population || 0)
-    }, 0)
+    const totalPopulation = matchedPoints.features.reduce(
+      (sum: number, pointFeature: any) => {
+        return sum + Number(pointFeature.properties.population || 0)
+      },
+      0
+    )
 
     results[minutes] = { totalPopulation }
   })
@@ -601,11 +910,23 @@ function calculateDriveTimeFreightHubs(
 
   isochronesGeoJSON.features.forEach((feature: any) => {
     const minutes = Number(feature.properties.contour)
-    const matchedHubs = turf.pointsWithinPolygon(freightHubsGeoJSON as any, feature as any)
+    const matchedHubs = turf.pointsWithinPolygon(
+      freightHubsGeoJSON as any,
+      feature as any
+    )
+
+    const uniqueHubs = Array.from(
+      new Map(
+        matchedHubs.features.map((hub: any) => [
+          `${hub.properties?.name || ''}-${hub.properties?.category || ''}-${hub.properties?.subtype || ''}`,
+          hub
+        ])
+      ).values()
+    )
 
     results[minutes] = {
-      totalHubs: matchedHubs.features.length,
-      hubs: matchedHubs.features.map((hub: any) => ({
+      totalHubs: uniqueHubs.length,
+      hubs: uniqueHubs.map((hub: any) => ({
         name: hub.properties.name,
         category: hub.properties.category,
         subtype: hub.properties.subtype,
@@ -617,70 +938,123 @@ function calculateDriveTimeFreightHubs(
   return results
 }
 
-function findNearestMotorwayAccessPoint(
+function calculateNearestMotorwayAccess(
   lng: number,
   lat: number,
   motorwayGeoJSON: GeoJSON.FeatureCollection<GeoJSON.Point>
-) {
+): NearestMotorwayAnalysis {
   const sitePoint = turf.point([lng, lat])
-  return turf.nearestPoint(sitePoint, motorwayGeoJSON as any)
-}
-
-async function getDriveRouteToMotorway(
-  originLng: number,
-  originLat: number,
-  destLng: number,
-  destLat: number
-) {
-  const url =
-    `https://api.mapbox.com/directions/v5/mapbox/driving/${originLng},${originLat};${destLng},${destLat}` +
-    `?geometries=geojson&overview=full&access_token=${mapboxgl.accessToken}`
-
-  const response = await fetch(url)
-  if (!response.ok) throw new Error('Could not fetch motorway access route.')
-
-  const data = await response.json()
-  if (!data.routes?.length) throw new Error('No route found to motorway access point.')
-
-  return data.routes[0]
-}
-
-async function calculateNearestMotorwayAccess(
-  lng: number,
-  lat: number,
-  motorwayGeoJSON: GeoJSON.FeatureCollection<GeoJSON.Point>
-) {
-  const nearest: any = findNearestMotorwayAccessPoint(lng, lat, motorwayGeoJSON)
-  const [destLng, destLat] = nearest.geometry.coordinates
-  const route = await getDriveRouteToMotorway(lng, lat, destLng, destLat)
+  const nearest = turf.nearestPoint(
+    sitePoint,
+    motorwayGeoJSON as any
+  ) as GeoJSON.Feature<GeoJSON.Point>
 
   return {
     point: nearest,
-    distanceMeters: route.distance,
-    durationSeconds: route.duration,
-    routeGeometry: route.geometry
+    name: String(nearest.properties?.name || 'N/A'),
+    road: String(nearest.properties?.road || 'N/A'),
+    junction: String(nearest.properties?.junction || 'N/A'),
+    corridor: String(nearest.properties?.corridor || 'N/A'),
+    region: String(nearest.properties?.region || 'N/A'),
+    nation: String(nearest.properties?.nation || 'N/A')
   }
 }
 
-function getRegionFromPostcodeData(postcodeData: any) {
-  const region = (postcodeData.region || '').toLowerCase()
-  const country = (postcodeData.country || '').toLowerCase()
+function calculateNearbyInfrastructureProjects(
+  lng: number,
+  lat: number,
+  infrastructureProjectsGeoJSON: GeoJSON.FeatureCollection<GeoJSON.Point>
+): InfrastructureAnalysis {
+  const sitePoint = turf.point([lng, lat])
 
-  if (country.includes('scotland')) return 'Scotland'
-  if (country.includes('wales')) return 'Wales'
-  if (region.includes('london')) return 'London'
-  if (region.includes('south east')) return 'South East'
-  if (region.includes('south west')) return 'South West'
-  if (region.includes('east midlands') || region.includes('west midlands')) return 'Midlands'
-  if (region.includes('north west')) return 'North West'
-  if (region.includes('yorkshire') || region.includes('north east')) return 'Yorkshire & North East'
+  const projectsWithDistance = infrastructureProjectsGeoJSON.features
+    .map((feature: any) => {
+      const distanceKm = turf.distance(sitePoint, feature, { units: 'kilometers' })
+
+      return {
+        ...feature,
+        properties: {
+          ...(feature.properties || {}),
+          distance_km: distanceKm
+        }
+      } as GeoJSON.Feature<GeoJSON.Point>
+    })
+    .sort((a: any, b: any) => {
+      return Number(a.properties?.distance_km || 0) - Number(b.properties?.distance_km || 0)
+    })
+
+  const within25km = projectsWithDistance.filter(
+    (feature: any) => Number(feature.properties?.distance_km || 0) <= 25
+  )
+
+  const within50km = projectsWithDistance.filter(
+    (feature: any) => Number(feature.properties?.distance_km || 0) <= 50
+  )
+
+  return {
+    nearest: projectsWithDistance[0] || null,
+    within25km,
+    within50km
+  }
+}
+
+function getRegionFromCoordinates(lng: number, lat: number) {
+  if (lat >= 55.0) return 'Scotland'
+  if (lng <= -3.3 && lat >= 51.3 && lat <= 53.6) return 'Wales'
+
+  if (lng >= -0.6 && lng <= 0.4 && lat >= 51.25 && lat <= 51.75) return 'London'
+  if (lng >= -0.2 && lng <= 1.8 && lat >= 51.6 && lat <= 53.1) return 'East of England'
+  if (lng >= -1.9 && lng <= -0.3 && lat >= 52.6 && lat <= 53.8) return 'East Midlands'
+  if (lng >= -3.1 && lng <= -1.1 && lat >= 52.2 && lat <= 53.8) return 'West Midlands'
+
+  if (lng >= -5.9 && lng <= -1.7 && lat >= 50.0 && lat <= 52.2) return 'South West'
+  if (lng >= -2.7 && lng <= 1.2 && lat >= 50.7 && lat <= 51.6) return 'South East'
+
+  if (lng >= -3.5 && lng <= -1.7 && lat >= 53.2 && lat <= 55.3) return 'North West'
+  if (lng >= -2.2 && lng <= 0.2 && lat >= 53.3 && lat <= 54.6) return 'Yorkshire'
+  if (lng >= -2.1 && lng <= -0.8 && lat >= 54.5 && lat <= 55.3) return 'North East'
 
   return null
 }
 
 function getMarketDataByRegion(regionName: string | null, marketData: MarketRow[]) {
   if (!regionName) return null
-  return marketData.find((item) => item.region === regionName) || null
+
+  const normalise = (value: string) =>
+    value
+      .toLowerCase()
+      .replace(/&/g, 'and')
+      .replace(/\s+/g, ' ')
+      .trim()
+
+  const aliases: Record<string, string[]> = {
+    london: ['greater london'],
+    'greater london': ['london'],
+    yorkshire: ['yorkshire and humber', 'yorkshire & humber'],
+    'north east': ['yorkshire and north east', 'yorkshire & north east'],
+    'east of england': ['east', 'east anglia'],
+    'east midlands': ['midlands'],
+    'west midlands': ['midlands'],
+    midlands: ['east midlands', 'west midlands']
+  }
+
+  const target = normalise(regionName)
+  const candidates = [target, ...(aliases[target] || [])]
+
+  const exact = marketData.find((item) =>
+    candidates.includes(normalise(item.region))
+  )
+  if (exact) return exact
+
+  return (
+    marketData.find((item) => {
+      const itemRegion = normalise(item.region)
+      return candidates.some(
+        (candidate) =>
+          itemRegion.includes(candidate) || candidate.includes(itemRegion)
+      )
+    }) || null
+  )
 }
 
 function drawIsochrones(map: mapboxgl.Map, isochrones: any) {
@@ -726,33 +1100,6 @@ function drawIsochrones(map: mapboxgl.Map, isochrones: any) {
   })
 }
 
-function drawMotorwayRoute(map: mapboxgl.Map, routeGeometry: GeoJSON.Geometry) {
-  const routeGeoJSON = {
-    type: 'Feature',
-    geometry: routeGeometry,
-    properties: {}
-  } as GeoJSON.Feature
-
-  if (map.getLayer('motorway-route-line')) map.removeLayer('motorway-route-line')
-  if (map.getSource('motorway-route')) map.removeSource('motorway-route')
-
-  map.addSource('motorway-route', {
-    type: 'geojson',
-    data: routeGeoJSON
-  })
-
-  map.addLayer({
-    id: 'motorway-route-line',
-    type: 'line',
-    source: 'motorway-route',
-    paint: {
-      'line-color': '#111827',
-      'line-width': 4,
-      'line-opacity': 0.8
-    }
-  })
-}
-
 function fitToIsochrones(map: mapboxgl.Map, isochrones: any) {
   const bounds = new mapboxgl.LngLatBounds()
 
@@ -760,7 +1107,9 @@ function fitToIsochrones(map: mapboxgl.Map, isochrones: any) {
     const geometry = feature.geometry
 
     if (geometry.type === 'Polygon') {
-      geometry.coordinates[0].forEach((coord: [number, number]) => bounds.extend(coord))
+      geometry.coordinates[0].forEach((coord: [number, number]) => {
+        bounds.extend(coord)
+      })
     }
 
     if (geometry.type === 'MultiPolygon') {
@@ -775,12 +1124,158 @@ function fitToIsochrones(map: mapboxgl.Map, isochrones: any) {
   }
 }
 
-function formatMinutes(seconds: number) {
-  return `${Math.round(seconds / 60)} min`
+function buildFreightHubSidebarHtml(properties: FreightHubProperties) {
+  const name = properties?.name || 'Unknown freight hub'
+  const category = properties?.category || 'N/A'
+  const subtype = properties?.subtype || 'N/A'
+  const region = properties?.region || 'N/A'
+  const nation = properties?.nation || 'N/A'
+  const operator = properties?.operator || 'N/A'
+  const corridor = properties?.corridor || 'N/A'
+
+  return `
+    <div class="results-shell">
+      <div class="hero-card">
+        <div class="hero-card__label">Freight hub</div>
+        <div class="hero-card__title">${name}</div>
+        <div class="hero-card__meta">
+          <span class="hero-chip">${String(category).replace(/_/g, ' ')}</span>
+          <span class="hero-chip">${String(subtype).replace(/_/g, ' ')}</span>
+          <span class="hero-chip">${region}</span>
+        </div>
+      </div>
+
+      <div class="result-section">
+        <div class="section-heading">Freight hub details</div>
+        <div class="market-grid">
+          <div class="data-tile">
+            <span class="data-tile__label">Name</span>
+            <span class="data-tile__value">${name}</span>
+          </div>
+
+          <div class="data-tile">
+            <span class="data-tile__label">Category</span>
+            <span class="data-tile__value">${String(category).replace(/_/g, ' ')}</span>
+          </div>
+
+          <div class="data-tile">
+            <span class="data-tile__label">Subtype</span>
+            <span class="data-tile__value">${String(subtype).replace(/_/g, ' ')}</span>
+          </div>
+
+          <div class="data-tile">
+            <span class="data-tile__label">Region</span>
+            <span class="data-tile__value">${region}</span>
+          </div>
+
+          <div class="data-tile">
+            <span class="data-tile__label">Nation</span>
+            <span class="data-tile__value">${nation}</span>
+          </div>
+
+          <div class="data-tile">
+            <span class="data-tile__label">Operator</span>
+            <span class="data-tile__value">${operator}</span>
+          </div>
+
+          <div class="data-tile">
+            <span class="data-tile__label">Corridor</span>
+            <span class="data-tile__value">${corridor}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  `
 }
 
-function formatMiles(meters: number) {
-  return `${(meters / 1609.344).toFixed(1)} miles`
+function buildInfrastructureProjectSidebarHtml(
+  properties: InfrastructureProjectProperties
+) {
+  const name = properties?.name || 'Unknown project'
+  const category = properties?.category || 'N/A'
+  const subtype = properties?.subtype || 'N/A'
+  const stage = properties?.stage || 'N/A'
+  const statusLabel = properties?.status_label || 'N/A'
+  const promoter = properties?.promoter || 'N/A'
+  const region = properties?.region || 'N/A'
+  const nation = properties?.nation || 'N/A'
+  const corridor = properties?.corridor || 'N/A'
+  const expectedCompletion = properties?.expected_completion || 'N/A'
+  const description = properties?.description || 'No description available.'
+
+  return `
+    <div class="results-shell">
+      <div class="hero-card">
+        <div class="hero-card__label">Infrastructure project</div>
+        <div class="hero-card__title">${name}</div>
+        <div class="hero-card__meta">
+          <span class="hero-chip">${String(category).replace(/_/g, ' ')}</span>
+          <span class="hero-chip">${String(stage).replace(/_/g, ' ')}</span>
+          <span class="hero-chip">${region}</span>
+        </div>
+      </div>
+
+      <div class="result-section">
+        <div class="section-heading">Project details</div>
+        <div class="market-grid">
+          <div class="data-tile">
+            <span class="data-tile__label">Name</span>
+            <span class="data-tile__value">${name}</span>
+          </div>
+
+          <div class="data-tile">
+            <span class="data-tile__label">Category</span>
+            <span class="data-tile__value">${String(category).replace(/_/g, ' ')}</span>
+          </div>
+
+          <div class="data-tile">
+            <span class="data-tile__label">Subtype</span>
+            <span class="data-tile__value">${String(subtype).replace(/_/g, ' ')}</span>
+          </div>
+
+          <div class="data-tile">
+            <span class="data-tile__label">Stage</span>
+            <span class="data-tile__value">${String(stage).replace(/_/g, ' ')}</span>
+          </div>
+
+          <div class="data-tile">
+            <span class="data-tile__label">Status</span>
+            <span class="data-tile__value">${statusLabel}</span>
+          </div>
+
+          <div class="data-tile">
+            <span class="data-tile__label">Promoter</span>
+            <span class="data-tile__value">${promoter}</span>
+          </div>
+
+          <div class="data-tile">
+            <span class="data-tile__label">Region</span>
+            <span class="data-tile__value">${region}</span>
+          </div>
+
+          <div class="data-tile">
+            <span class="data-tile__label">Nation</span>
+            <span class="data-tile__value">${nation}</span>
+          </div>
+
+          <div class="data-tile">
+            <span class="data-tile__label">Corridor</span>
+            <span class="data-tile__value">${corridor}</span>
+          </div>
+
+          <div class="data-tile">
+            <span class="data-tile__label">Expected completion</span>
+            <span class="data-tile__value">${expectedCompletion}</span>
+          </div>
+        </div>
+
+        <div class="info-card" style="margin-top: 14px;">
+          <div class="info-card__title">Description</div>
+          <div class="info-card__sub">${description}</div>
+        </div>
+      </div>
+    </div>
+  `
 }
 
 function buildResultsHtml({
@@ -790,103 +1285,313 @@ function buildResultsHtml({
   populationAnalysis,
   freightAnalysis,
   motorwayAnalysis,
+  infrastructureAnalysis,
   regionalMarket,
   regionName
-}: any) {
+}: {
+  label: string
+  lng: number
+  lat: number
+  populationAnalysis: any
+  freightAnalysis: any
+  motorwayAnalysis: NearestMotorwayAnalysis
+  infrastructureAnalysis: InfrastructureAnalysis
+  regionalMarket: MarketRow | null
+  regionName: string | null
+}) {
   const pop30 = populationAnalysis[30]?.totalPopulation || 0
   const pop60 = populationAnalysis[60]?.totalPopulation || 0
   const hubs30 = freightAnalysis[30]?.totalHubs || 0
   const hubs60 = freightAnalysis[60]?.totalHubs || 0
 
-  const hubList30 = (freightAnalysis[30]?.hubs || [])
-    .map((hub: any) => `${hub.name} (${hub.category.replace('_', ' ')})`)
-    .join('<br>')
+  const hubs30List = freightAnalysis[30]?.hubs || []
+  const hubs60List = freightAnalysis[60]?.hubs || []
 
-  const hubList60 = (freightAnalysis[60]?.hubs || [])
-    .map((hub: any) => `${hub.name} (${hub.category.replace('_', ' ')})`)
-    .join('<br>')
+  const motorwayName = motorwayAnalysis.name || 'N/A'
+  const motorwayRoad = motorwayAnalysis.road || 'N/A'
+  const motorwayJunction = motorwayAnalysis.junction || 'N/A'
+  const motorwayCorridor = motorwayAnalysis.corridor || 'N/A'
+  const motorwayRegion = motorwayAnalysis.region || 'N/A'
+  const motorwayNation = motorwayAnalysis.nation || 'N/A'
 
-  const motorwayName = motorwayAnalysis?.point?.properties?.name || 'N/A'
-  const motorwayRoad = motorwayAnalysis?.point?.properties?.road || 'N/A'
-  const motorwayJunction = motorwayAnalysis?.point?.properties?.junction || 'N/A'
-  const motorwayCorridor = motorwayAnalysis?.point?.properties?.corridor || 'N/A'
-  const motorwayTime = motorwayAnalysis ? formatMinutes(motorwayAnalysis.durationSeconds) : 'N/A'
-  const motorwayDistance = motorwayAnalysis ? formatMiles(motorwayAnalysis.distanceMeters) : 'N/A'
+  const nearestProject = infrastructureAnalysis?.nearest || null
+  const nearestProjectName = nearestProject?.properties?.name || 'None'
+  const nearestProjectCategory = nearestProject?.properties?.category || 'N/A'
+  const nearestProjectStage = nearestProject?.properties?.stage || 'N/A'
+  const nearestProjectDistance = nearestProject?.properties?.distance_km
+  const projectsWithin25km = infrastructureAnalysis?.within25km?.length || 0
+  const projectsWithin50km = infrastructureAnalysis?.within50km?.length || 0
 
-  const vacancyRate = regionalMarket?.vacancy_rate_current_pct ?? regionalMarket?.vacancy_rate ?? 'N/A'
+  const vacancyRate =
+    regionalMarket?.vacancy_rate_current_pct ??
+    regionalMarket?.vacancy_rate ??
+    'N/A'
   const vacancyRateRank = regionalMarket?.vacancy_rate_current_rank ?? 'N/A'
   const avgRent = regionalMarket?.avg_rent_psf ?? 'N/A'
   const rentTrend = regionalMarket?.rent_trend ?? 'N/A'
   const marketType = regionalMarket?.market_type ?? 'N/A'
   const economicGrowth1y = regionalMarket?.economic_growth_1y_pct ?? 'N/A'
   const economicGrowth1yRank = regionalMarket?.economic_growth_1y_rank ?? 'N/A'
-  const economicGrowth5y = regionalMarket?.economic_growth_5y_cagr_proxy_pct ?? 'N/A'
-  const economicGrowth5yRank = regionalMarket?.economic_growth_5y_cagr_proxy_rank ?? 'N/A'
+  const economicGrowth5y =
+    regionalMarket?.economic_growth_5y_cagr_proxy_pct ?? 'N/A'
+  const economicGrowth5yRank =
+    regionalMarket?.economic_growth_5y_cagr_proxy_rank ?? 'N/A'
   const vacancyChange1y = regionalMarket?.vacancy_change_1y_pp ?? 'N/A'
   const vacancyChange1yRank = regionalMarket?.vacancy_change_1y_rank ?? 'N/A'
   const vacancyChange5y = regionalMarket?.vacancy_change_5y_proxy_pp ?? 'N/A'
-  const vacancyChange5yRank = regionalMarket?.vacancy_change_5y_proxy_rank ?? 'N/A'
+  const vacancyChange5yRank =
+    regionalMarket?.vacancy_change_5y_proxy_rank ?? 'N/A'
   const rentalChange1y = regionalMarket?.rental_change_1y_pct ?? 'N/A'
   const rentalChange1yRank = regionalMarket?.rental_change_1y_rank ?? 'N/A'
-  const rentalChange5y = regionalMarket?.rental_change_5y_forecast_pct ?? 'N/A'
-  const rentalChange5yRank = regionalMarket?.rental_change_5y_forecast_rank ?? 'N/A'
-  const fdiLastYear = regionalMarket?.foreign_investment_last_year_projects ?? 'N/A'
-  const fdiLastYearRank = regionalMarket?.foreign_investment_last_year_rank ?? 'N/A'
+  const rentalChange5y =
+    regionalMarket?.rental_change_5y_forecast_pct ?? 'N/A'
+  const rentalChange5yRank =
+    regionalMarket?.rental_change_5y_forecast_rank ?? 'N/A'
+  const fdiLastYear =
+    regionalMarket?.foreign_investment_last_year_projects ?? 'N/A'
+  const fdiLastYearRank =
+    regionalMarket?.foreign_investment_last_year_rank ?? 'N/A'
 
   return {
     sidebar: `
-      <strong>Location:</strong> ${label}<br>
-      <strong>Latitude:</strong> ${lat.toFixed(6)}<br>
-      <strong>Longitude:</strong> ${lng.toFixed(6)}<br><br>
+      <div class="results-shell">
+        <div class="hero-card">
+          <div class="hero-card__label">Selected location</div>
+          <div class="hero-card__title">${label}</div>
+          <div class="hero-card__meta">
+            <span class="hero-chip">Lat ${lat.toFixed(6)}</span>
+            <span class="hero-chip">Lng ${lng.toFixed(6)}</span>
+            <span class="hero-chip">${regionName || 'Unknown region'}</span>
+          </div>
+        </div>
 
-      <strong>Population within 30 min drive:</strong><br>
-      ${pop30.toLocaleString()}<br><br>
+        <div class="metrics-grid">
+          <div class="metric-card metric-card--blue">
+            <div class="metric-card__label">30 min population</div>
+            <div class="metric-card__value">${pop30.toLocaleString()}</div>
+          </div>
 
-      <strong>Population within 60 min drive:</strong><br>
-      ${pop60.toLocaleString()}<br><br>
+          <div class="metric-card metric-card--indigo">
+            <div class="metric-card__label">60 min population</div>
+            <div class="metric-card__value">${pop60.toLocaleString()}</div>
+          </div>
 
-      <strong>Freight hubs within 30 min drive:</strong><br>
-      ${hubs30}<br>
-      ${hubList30 || 'None'}<br><br>
+          <div class="metric-card metric-card--amber">
+            <div class="metric-card__label">30 min freight hubs</div>
+            <div class="metric-card__value">${hubs30}</div>
+          </div>
 
-      <strong>Freight hubs within 60 min drive:</strong><br>
-      ${hubs60}<br>
-      ${hubList60 || 'None'}<br><br>
+          <div class="metric-card metric-card--emerald">
+            <div class="metric-card__label">60 min freight hubs</div>
+            <div class="metric-card__value">${hubs60}</div>
+          </div>
+        </div>
 
-      <strong>Closest motorway corridor:</strong><br>
-      ${motorwayName} (${motorwayRoad} J${motorwayJunction})<br>
-      ${motorwayCorridor}<br><br>
+        <div class="result-section">
+          <div class="section-heading">Infrastructure nearby</div>
+          <div class="market-grid">
+            <div class="data-tile">
+              <span class="data-tile__label">Within 25 km</span>
+              <span class="data-tile__value">${projectsWithin25km}</span>
+            </div>
 
-      <strong>Time to access motorway:</strong><br>
-      ${motorwayTime}<br>
-      <strong>Distance to access motorway:</strong><br>
-      ${motorwayDistance}<br><br>
+            <div class="data-tile">
+              <span class="data-tile__label">Within 50 km</span>
+              <span class="data-tile__value">${projectsWithin50km}</span>
+            </div>
 
-      <strong>Regional I&amp;L market:</strong><br>
-      Region: ${regionName || 'Unknown'}<br>
-      Current vacancy rate: ${vacancyRate}${vacancyRate !== 'N/A' ? '%' : ''} (Rank ${vacancyRateRank})<br>
-      Vacancy change 1Y: ${vacancyChange1y}${vacancyChange1y !== 'N/A' ? ' pp' : ''} (Rank ${vacancyChange1yRank})<br>
-      Vacancy change 5Y: ${vacancyChange5y}${vacancyChange5y !== 'N/A' ? ' pp' : ''} (Rank ${vacancyChange5yRank})<br>
-      Average rent: ${avgRent !== 'N/A' ? `£${avgRent}/sq ft` : 'N/A'}<br>
-      Rental change 1Y: ${rentalChange1y}${rentalChange1y !== 'N/A' ? '%' : ''} (Rank ${rentalChange1yRank})<br>
-      Rental change 5Y: ${rentalChange5y}${rentalChange5y !== 'N/A' ? '%' : ''} (Rank ${rentalChange5yRank})<br>
-      Economic growth 1Y: ${economicGrowth1y}${economicGrowth1y !== 'N/A' ? '%' : ''} (Rank ${economicGrowth1yRank})<br>
-      Economic growth 5Y: ${economicGrowth5y}${economicGrowth5y !== 'N/A' ? '%' : ''} (Rank ${economicGrowth5yRank})<br>
-      Foreign investment last year: ${fdiLastYear} projects (Rank ${fdiLastYearRank})<br>
-      Rent trend: ${rentTrend}<br>
-      Market type: ${marketType}
+            <div class="data-tile">
+              <span class="data-tile__label">Nearest project</span>
+              <span class="data-tile__value">${nearestProjectName}</span>
+            </div>
+
+            <div class="data-tile">
+              <span class="data-tile__label">Project category</span>
+              <span class="data-tile__value">${String(nearestProjectCategory).replace(/_/g, ' ')}</span>
+            </div>
+
+            <div class="data-tile">
+              <span class="data-tile__label">Project stage</span>
+              <span class="data-tile__value">${String(nearestProjectStage).replace(/_/g, ' ')}</span>
+            </div>
+
+            <div class="data-tile">
+              <span class="data-tile__label">Distance</span>
+              <span class="data-tile__value">${
+                typeof nearestProjectDistance === 'number'
+                  ? `${nearestProjectDistance.toFixed(1)} km`
+                  : 'N/A'
+              }</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="result-section">
+          <div class="section-heading">Freight hubs within 30 minutes</div>
+          <div class="pill-grid">
+            ${
+              hubs30List.length
+                ? hubs30List
+                    .map(
+                      (hub: any) => `
+                        <div class="hub-pill">
+                          <span class="hub-pill__name">${hub.name}</span>
+                          <span class="hub-pill__type">${String(hub.category).replace(/_/g, ' ')}</span>
+                          <span class="hub-pill__meta">${hub.region}</span>
+                        </div>
+                      `
+                    )
+                    .join('')
+                : `<span class="empty-state">None</span>`
+            }
+          </div>
+        </div>
+
+        <div class="result-section">
+          <div class="section-heading">Freight hubs within 60 minutes</div>
+          <div class="pill-grid">
+            ${
+              hubs60List.length
+                ? hubs60List
+                    .map(
+                      (hub: any) => `
+                        <div class="hub-pill">
+                          <span class="hub-pill__name">${hub.name}</span>
+                          <span class="hub-pill__type">${String(hub.category).replace(/_/g, ' ')}</span>
+                          <span class="hub-pill__meta">${hub.region}</span>
+                        </div>
+                      `
+                    )
+                    .join('')
+                : `<span class="empty-state">None</span>`
+            }
+          </div>
+        </div>
+
+        <div class="result-section">
+          <div class="section-heading">Nearest motorway</div>
+          <div class="info-card">
+            <div class="info-card__title">
+              ${motorwayName} (${motorwayRoad}${
+                motorwayJunction !== 'N/A' ? ` J${motorwayJunction}` : ''
+              })
+            </div>
+            <div class="info-card__sub">${motorwayCorridor}</div>
+            <div class="info-card__meta">${motorwayRegion}, ${motorwayNation}</div>
+          </div>
+        </div>
+
+        <div class="result-section">
+          <div class="section-heading">Regional I&amp;L market</div>
+          <div class="market-grid">
+            <div class="data-tile">
+              <span class="data-tile__label">Region</span>
+              <span class="data-tile__value">${regionName || 'Unknown'}</span>
+            </div>
+
+            <div class="data-tile">
+              <span class="data-tile__label">Vacancy rate</span>
+              <span class="data-tile__value">${vacancyRate}${
+                vacancyRate !== 'N/A' ? '%' : ''
+              }</span>
+              <span class="data-tile__sub">Rank ${vacancyRateRank}</span>
+            </div>
+
+            <div class="data-tile">
+              <span class="data-tile__label">Vacancy change 1Y</span>
+              <span class="data-tile__value">${vacancyChange1y}${
+                vacancyChange1y !== 'N/A' ? ' pp' : ''
+              }</span>
+              <span class="data-tile__sub">Rank ${vacancyChange1yRank}</span>
+            </div>
+
+            <div class="data-tile">
+              <span class="data-tile__label">Vacancy change 5Y</span>
+              <span class="data-tile__value">${vacancyChange5y}${
+                vacancyChange5y !== 'N/A' ? ' pp' : ''
+              }</span>
+              <span class="data-tile__sub">Rank ${vacancyChange5yRank}</span>
+            </div>
+
+            <div class="data-tile">
+              <span class="data-tile__label">Average rent</span>
+              <span class="data-tile__value">${
+                avgRent !== 'N/A' ? `£${avgRent}/sq ft` : 'N/A'
+              }</span>
+            </div>
+
+            <div class="data-tile">
+              <span class="data-tile__label">Rental change 1Y</span>
+              <span class="data-tile__value">${rentalChange1y}${
+                rentalChange1y !== 'N/A' ? '%' : ''
+              }</span>
+              <span class="data-tile__sub">Rank ${rentalChange1yRank}</span>
+            </div>
+
+            <div class="data-tile">
+              <span class="data-tile__label">Rental change 5Y</span>
+              <span class="data-tile__value">${rentalChange5y}${
+                rentalChange5y !== 'N/A' ? '%' : ''
+              }</span>
+              <span class="data-tile__sub">Rank ${rentalChange5yRank}</span>
+            </div>
+
+            <div class="data-tile">
+              <span class="data-tile__label">Economic growth 1Y</span>
+              <span class="data-tile__value">${economicGrowth1y}${
+                economicGrowth1y !== 'N/A' ? '%' : ''
+              }</span>
+              <span class="data-tile__sub">Rank ${economicGrowth1yRank}</span>
+            </div>
+
+            <div class="data-tile">
+              <span class="data-tile__label">Economic growth 5Y</span>
+              <span class="data-tile__value">${economicGrowth5y}${
+                economicGrowth5y !== 'N/A' ? '%' : ''
+              }</span>
+              <span class="data-tile__sub">Rank ${economicGrowth5yRank}</span>
+            </div>
+
+            <div class="data-tile">
+              <span class="data-tile__label">Foreign investment</span>
+              <span class="data-tile__value">${fdiLastYear} projects</span>
+              <span class="data-tile__sub">Rank ${fdiLastYearRank}</span>
+            </div>
+
+            <div class="data-tile">
+              <span class="data-tile__label">Rent trend</span>
+              <span class="data-tile__value">${rentTrend}</span>
+            </div>
+
+            <div class="data-tile">
+              <span class="data-tile__label">Market type</span>
+              <span class="data-tile__value">${marketType}</span>
+            </div>
+          </div>
+        </div>
+      </div>
     `,
     popup: `
-      <strong>${label}</strong><br>
-      30 min population: ${pop30.toLocaleString()}<br>
-      60 min population: ${pop60.toLocaleString()}<br>
-      30 min freight hubs: ${hubs30}<br>
-      60 min freight hubs: ${hubs60}<br>
-      Closest motorway: ${motorwayName}<br>
-      Access time: ${motorwayTime}<br>
-      Region: ${regionName || 'Unknown'}<br>
-      Vacancy: ${vacancyRate}${vacancyRate !== 'N/A' ? '%' : ''}<br>
-      Rent: ${avgRent !== 'N/A' ? `£${avgRent}/sq ft` : 'N/A'}
+      <div class="popup-card">
+        <div class="popup-card__label">Selected location</div>
+        <div class="popup-card__title">${label}</div>
+
+        <div class="popup-coords">
+          <div class="popup-coord">
+            <span>Latitude</span>
+            <strong>${lat.toFixed(6)}</strong>
+          </div>
+          <div class="popup-coord">
+            <span>Longitude</span>
+            <strong>${lng.toFixed(6)}</strong>
+          </div>
+        </div>
+
+        <div class="popup-line">
+          <span>Region</span>
+          <strong>${regionName || 'Unknown'}</strong>
+        </div>
+      </div>
     `
   }
 }

@@ -1,0 +1,713 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "grangemouth",
+        "name": "Port of Grangemouth",
+        "category": "port",
+        "subtype": "container",
+        "region": "Scotland",
+        "hub_tier": "major"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-3.718, 56.011]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "aberdeen",
+        "name": "Port of Aberdeen",
+        "category": "port",
+        "subtype": "mixed",
+        "region": "Scotland",
+        "hub_tier": "major"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-2.094, 57.149]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "rosyth",
+        "name": "Port of Rosyth",
+        "category": "port",
+        "subtype": "ro_ro",
+        "region": "Scotland",
+        "hub_tier": "secondary"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-3.432, 56.019]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "leith",
+        "name": "Port of Leith",
+        "category": "port",
+        "subtype": "mixed",
+        "region": "Scotland",
+        "hub_tier": "secondary"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-3.171, 55.98]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "dundee",
+        "name": "Port of Dundee",
+        "category": "port",
+        "subtype": "bulk",
+        "region": "Scotland",
+        "hub_tier": "secondary"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-2.937, 56.457]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "glasgow_prestwick",
+        "name": "Glasgow Prestwick Airport",
+        "category": "airport",
+        "subtype": "cargo_hub",
+        "region": "Scotland",
+        "hub_tier": "secondary"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-4.614, 55.509]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "mossend",
+        "name": "Mossend International Railfreight Park",
+        "category": "rail_terminal",
+        "subtype": "srfi",
+        "region": "Scotland",
+        "hub_tier": "major"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-3.993, 55.816]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "coatbridge",
+        "name": "Coatbridge Freightliner Terminal",
+        "category": "rail_terminal",
+        "subtype": "intermodal",
+        "region": "Scotland",
+        "hub_tier": "secondary"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-4.034, 55.862]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "grangemouth_rail",
+        "name": "Grangemouth Rail Freight Terminal",
+        "category": "rail_terminal",
+        "subtype": "intermodal",
+        "region": "Scotland",
+        "hub_tier": "secondary"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-3.709, 56.010]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "immingham",
+        "name": "Port of Immingham",
+        "category": "port",
+        "subtype": "bulk",
+        "region": "Yorkshire",
+        "hub_tier": "major"
+      },
+      "geometry": { "type": "Point", "coordinates": [-0.186, 53.617] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "hull",
+        "name": "Port of Hull",
+        "category": "port",
+        "subtype": "ro_ro",
+        "region": "Yorkshire",
+        "hub_tier": "major"
+      },
+      "geometry": { "type": "Point", "coordinates": [-0.327, 53.744] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "grimsby",
+        "name": "Port of Grimsby",
+        "category": "port",
+        "subtype": "ro_ro",
+        "region": "Yorkshire",
+        "hub_tier": "secondary"
+      },
+      "geometry": { "type": "Point", "coordinates": [-0.086, 53.575] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "killingholme",
+        "name": "Port of Killingholme",
+        "category": "port",
+        "subtype": "ro_ro",
+        "region": "Yorkshire",
+        "hub_tier": "secondary"
+      },
+      "geometry": { "type": "Point", "coordinates": [-0.251, 53.628] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "goole",
+        "name": "Port of Goole",
+        "category": "port",
+        "subtype": "inland_port",
+        "region": "Yorkshire",
+        "hub_tier": "secondary"
+      },
+      "geometry": { "type": "Point", "coordinates": [-0.876, 53.704] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "iport_doncaster",
+        "name": "iPort Doncaster",
+        "category": "rail_terminal",
+        "subtype": "srfi",
+        "region": "Yorkshire",
+        "hub_tier": "major"
+      },
+      "geometry": { "type": "Point", "coordinates": [-1.123, 53.520] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "wakefield_europort",
+        "name": "Wakefield Europort",
+        "category": "rail_terminal",
+        "subtype": "intermodal",
+        "region": "Yorkshire",
+        "hub_tier": "secondary"
+      },
+      "geometry": { "type": "Point", "coordinates": [-1.486, 53.683] }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "teesport",
+        "name": "Teesport",
+        "category": "port",
+        "subtype": "bulk",
+        "region": "North East",
+        "hub_tier": "major"
+      },
+      "geometry": { "type": "Point", "coordinates": [-1.183, 54.616] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "port_of_tyne",
+        "name": "Port of Tyne",
+        "category": "port",
+        "subtype": "mixed",
+        "region": "North East",
+        "hub_tier": "secondary"
+      },
+      "geometry": { "type": "Point", "coordinates": [-1.447, 54.999] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "hartlepool",
+        "name": "Port of Hartlepool",
+        "category": "port",
+        "subtype": "bulk",
+        "region": "North East",
+        "hub_tier": "secondary"
+      },
+      "geometry": { "type": "Point", "coordinates": [-1.198, 54.691] }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "liverpool",
+        "name": "Port of Liverpool",
+        "category": "port",
+        "subtype": "container",
+        "region": "North West",
+        "hub_tier": "major"
+      },
+      "geometry": { "type": "Point", "coordinates": [-3.007, 53.445] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "manchester_ship_canal",
+        "name": "Manchester Ship Canal / Port Salford",
+        "category": "port",
+        "subtype": "inland_port",
+        "region": "North West",
+        "hub_tier": "secondary"
+      },
+      "geometry": { "type": "Point", "coordinates": [-2.445, 53.472] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "garston",
+        "name": "Port of Garston",
+        "category": "port",
+        "subtype": "mixed",
+        "region": "North West",
+        "hub_tier": "secondary"
+      },
+      "geometry": { "type": "Point", "coordinates": [-2.885, 53.349] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "manchester_airport",
+        "name": "Manchester Airport",
+        "category": "airport",
+        "subtype": "cargo_hub",
+        "region": "North West",
+        "hub_tier": "major"
+      },
+      "geometry": { "type": "Point", "coordinates": [-2.275, 53.353] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "trafford_park_terminal",
+        "name": "Trafford Park Rail Terminal",
+        "category": "rail_terminal",
+        "subtype": "intermodal",
+        "region": "North West",
+        "hub_tier": "major"
+      },
+      "geometry": { "type": "Point", "coordinates": [-2.333, 53.466] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "hams_hall",
+        "name": "Hams Hall Rail Freight Terminal",
+        "category": "rail_terminal",
+        "subtype": "intermodal",
+        "region": "West Midlands",
+        "hub_tier": "major"
+      },
+      "geometry": { "type": "Point", "coordinates": [-1.735, 52.519] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "birch_coppice",
+        "name": "Birch Coppice Rail Freight Terminal",
+        "category": "rail_terminal",
+        "subtype": "srfi",
+        "region": "West Midlands",
+        "hub_tier": "secondary"
+      },
+      "geometry": { "type": "Point", "coordinates": [-1.603, 52.603] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "birmingham_ift",
+        "name": "Birmingham Intermodal Freight Terminal",
+        "category": "rail_terminal",
+        "subtype": "intermodal",
+        "region": "West Midlands",
+        "hub_tier": "secondary"
+      },
+      "geometry": { "type": "Point", "coordinates": [-1.898, 52.492] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "birmingham_airport",
+        "name": "Birmingham Airport",
+        "category": "airport",
+        "subtype": "cargo_hub",
+        "region": "West Midlands",
+        "hub_tier": "secondary"
+      },
+      "geometry": { "type": "Point", "coordinates": [-1.748, 52.453] }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "east_midlands_airport",
+        "name": "East Midlands Airport",
+        "category": "airport",
+        "subtype": "cargo_hub",
+        "region": "East Midlands",
+        "hub_tier": "major"
+      },
+      "geometry": { "type": "Point", "coordinates": [-1.328, 52.831] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "east_midlands_gateway",
+        "name": "East Midlands Gateway",
+        "category": "rail_terminal",
+        "subtype": "srfi",
+        "region": "East Midlands",
+        "hub_tier": "major"
+      },
+      "geometry": { "type": "Point", "coordinates": [-1.327, 52.831] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "dirft",
+        "name": "DIRFT (Daventry)",
+        "category": "rail_terminal",
+        "subtype": "srfi",
+        "region": "East Midlands",
+        "hub_tier": "major"
+      },
+      "geometry": { "type": "Point", "coordinates": [-1.178, 52.272] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "wolverhampton_i54",
+        "name": "Wolverhampton i54 Rail Freight Site",
+        "category": "rail_terminal",
+        "subtype": "intermodal",
+        "region": "West Midlands",
+        "hub_tier": "secondary"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-2.098, 52.648]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "telford_irp",
+        "name": "Telford International Railfreight Park",
+        "category": "rail_terminal",
+        "subtype": "intermodal",
+        "region": "West Midlands",
+        "hub_tier": "secondary"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-2.445, 52.676]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "dirft_daventry",
+        "name": "DIRFT (Daventry International Rail Freight Terminal)",
+        "category": "rail_terminal",
+        "subtype": "srfi",
+        "region": "East Midlands",
+        "hub_tier": "major"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-1.178, 52.272]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "dover",
+        "name": "Port of Dover",
+        "category": "port",
+        "subtype": "ro_ro",
+        "region": "South East",
+        "hub_tier": "major"
+      },
+      "geometry": { "type": "Point", "coordinates": [1.313, 51.129] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "southampton",
+        "name": "Port of Southampton",
+        "category": "port",
+        "subtype": "container",
+        "region": "South East",
+        "hub_tier": "major"
+      },
+      "geometry": { "type": "Point", "coordinates": [-1.404, 50.899] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "london_gateway",
+        "name": "London Gateway",
+        "category": "port",
+        "subtype": "deep_sea",
+        "region": "South East",
+        "hub_tier": "major"
+      },
+      "geometry": { "type": "Point", "coordinates": [0.484, 51.503] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "tilbury",
+        "name": "Port of Tilbury",
+        "category": "port",
+        "subtype": "mixed",
+        "region": "South East",
+        "hub_tier": "major"
+      },
+      "geometry": { "type": "Point", "coordinates": [0.355, 51.462] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "thamesport",
+        "name": "Thamesport",
+        "category": "port",
+        "subtype": "container",
+        "region": "South East",
+        "hub_tier": "secondary"
+      },
+      "geometry": { "type": "Point", "coordinates": [0.689, 51.438] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "portsmouth",
+        "name": "Portsmouth International Port",
+        "category": "port",
+        "subtype": "ro_ro",
+        "region": "South East",
+        "hub_tier": "secondary"
+      },
+      "geometry": { "type": "Point", "coordinates": [-1.096, 50.806] }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "heathrow",
+        "name": "Heathrow Airport",
+        "category": "airport",
+        "subtype": "cargo_hub",
+        "region": "South East",
+        "hub_tier": "major"
+      },
+      "geometry": { "type": "Point", "coordinates": [-0.4543, 51.47] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "gatwick",
+        "name": "Gatwick Airport",
+        "category": "airport",
+        "subtype": "cargo",
+        "region": "South East",
+        "hub_tier": "secondary"
+      },
+      "geometry": { "type": "Point", "coordinates": [-0.1903, 51.1537] }
+    },
+
+
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "bristol",
+        "name": "Port of Bristol (Avonmouth)",
+        "category": "port",
+        "subtype": "mixed",
+        "region": "South West",
+        "hub_tier": "major"
+      },
+      "geometry": { "type": "Point", "coordinates": [-2.699, 51.504] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "south_wales_newport",
+        "name": "Port of Newport",
+        "category": "port",
+        "subtype": "mixed",
+        "region": "South West",
+        "hub_tier": "secondary"
+      },
+      "geometry": { "type": "Point", "coordinates": [-2.964, 51.571] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "south_wales_port_talbot",
+        "name": "Port Talbot",
+        "category": "port",
+        "subtype": "bulk",
+        "region": "South West",
+        "hub_tier": "secondary"
+      },
+      "geometry": { "type": "Point", "coordinates": [-3.784, 51.588] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "plymouth",
+        "name": "Port of Plymouth",
+        "category": "port",
+        "subtype": "ro_ro",
+        "region": "South West",
+        "hub_tier": "secondary"
+      },
+      "geometry": { "type": "Point", "coordinates": [-4.142, 50.375] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "exeter",
+        "name": "Exeter Airport",
+        "category": "airport",
+        "subtype": "cargo",
+        "region": "South West",
+        "hub_tier": "secondary"
+      },
+      "geometry": { "type": "Point", "coordinates": [-3.413, 50.734] }
+    },
+     {
+      "type": "Feature",
+      "properties": {
+        "id": "felixstowe",
+        "name": "Port of Felixstowe",
+        "category": "port",
+        "subtype": "container",
+        "region": "East of England",
+        "hub_tier": "major"
+      },
+      "geometry": { "type": "Point", "coordinates": [1.311, 51.955] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "harwich",
+        "name": "Port of Harwich",
+        "category": "port",
+        "subtype": "ro_ro",
+        "region": "East of England",
+        "hub_tier": "secondary"
+      },
+      "geometry": { "type": "Point", "coordinates": [1.286, 51.947] }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "stansted",
+        "name": "London Stansted Airport",
+        "category": "airport",
+        "subtype": "cargo_hub",
+        "region": "East of England",
+        "hub_tier": "secondary"
+      },
+      "geometry": { "type": "Point", "coordinates": [0.235, 51.885] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "luton",
+        "name": "London Luton Airport",
+        "category": "airport",
+        "subtype": "cargo_hub",
+        "region": "East of England",
+        "hub_tier": "secondary"
+      },
+      "geometry": { "type": "Point", "coordinates": [-0.3683, 51.8747] }
+    },
+
+
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "milford_haven",
+        "name": "Port of Milford Haven",
+        "category": "port",
+        "subtype": "energy",
+        "region": "Wales",
+        "hub_tier": "major"
+      },
+      "geometry": { "type": "Point", "coordinates": [-5.042, 51.712] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "holyhead",
+        "name": "Port of Holyhead",
+        "category": "port",
+        "subtype": "ro_ro",
+        "region": "Wales",
+        "hub_tier": "major"
+      },
+      "geometry": { "type": "Point", "coordinates": [-4.633, 53.307] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "newport",
+        "name": "Port of Newport",
+        "category": "port",
+        "subtype": "mixed",
+        "region": "Wales",
+        "hub_tier": "secondary"
+      },
+      "geometry": { "type": "Point", "coordinates": [-2.964, 51.571] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "port_talbot",
+        "name": "Port Talbot",
+        "category": "port",
+        "subtype": "bulk",
+        "region": "Wales",
+        "hub_tier": "secondary"
+      },
+      "geometry": { "type": "Point", "coordinates": [-3.784, 51.588] }
+    }
+
+  ]
+}

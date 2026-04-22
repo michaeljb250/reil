@@ -1,0 +1,197 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-2.0906, 51.8286]
+      },
+      "properties": {
+        "id": "a417-missing-link",
+        "name": "A417 Missing Link",
+        "category": "road",
+        "subtype": "strategic_road_upgrade",
+        "stage": "construction",
+        "status_label": "Under construction",
+        "promoter": "National Highways",
+        "region": "South West",
+        "nation": "England",
+        "corridor": "A417 / M4-M5 connectivity",
+        "expected_completion": "2027",
+        "description": "Upgrade between Brockworth and Cowley to create a safer and more reliable link between the M4 and M5 corridors.",
+        "source_name": "National Highways",
+        "source_key": "nh_a417_missing_link",
+        "last_checked": "2026-04-22"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [0.4402, 51.4842]
+      },
+      "properties": {
+        "id": "lower-thames-crossing",
+        "name": "Lower Thames Crossing",
+        "category": "road",
+        "subtype": "new_river_crossing",
+        "stage": "pre_construction",
+        "status_label": "Consent granted / early works",
+        "promoter": "National Highways",
+        "region": "South East",
+        "nation": "England",
+        "corridor": "Kent-Essex Thames crossing",
+        "expected_completion": "early 2030s",
+        "description": "New road crossing intended to improve connectivity between Kent, Thurrock and Essex and reduce pressure on Dartford.",
+        "source_name": "National Highways",
+        "source_key": "nh_lower_thames_crossing",
+        "last_checked": "2026-04-22"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-1.7850, 53.6458]
+      },
+      "properties": {
+        "id": "transpennine-route-upgrade",
+        "name": "Transpennine Route Upgrade",
+        "category": "rail",
+        "subtype": "rail_upgrade",
+        "stage": "construction",
+        "status_label": "Long-term upgrade in delivery",
+        "promoter": "Network Rail",
+        "region": "Yorkshire",
+        "nation": "England",
+        "corridor": "York-Leeds-Huddersfield-Manchester",
+        "expected_completion": "phased programme",
+        "description": "Major long-term upgrade to improve capacity, reliability and connectivity across the key trans-Pennine rail corridor.",
+        "source_name": "Network Rail",
+        "source_key": "nr_transpennine_route_upgrade",
+        "last_checked": "2026-04-22"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-0.7000, 52.0400]
+      },
+      "properties": {
+        "id": "east-west-rail",
+        "name": "East West Rail",
+        "category": "rail",
+        "subtype": "new_rail_link",
+        "stage": "consultation",
+        "status_label": "Final route-wide consultation before DCO",
+        "promoter": "East West Rail Company",
+        "region": "South East",
+        "nation": "England",
+        "corridor": "Oxford-Milton Keynes-Bedford-Cambridge",
+        "expected_completion": "phased / end of decade for Oxford-Bedford service",
+        "description": "New and upgraded rail connection linking Oxford, Milton Keynes, Bedford and Cambridge, with consultation ahead of a planned DCO submission.",
+        "source_name": "East West Rail / UK Government",
+        "source_key": "ewr_route_wide_consultation_2026",
+        "last_checked": "2026-04-22"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-1.8904, 52.4862]
+      },
+      "properties": {
+        "id": "midlands-rail-hub",
+        "name": "Midlands Rail Hub",
+        "category": "rail",
+        "subtype": "rail_capacity_upgrade",
+        "stage": "development",
+        "status_label": "Programme development",
+        "promoter": "Network Rail",
+        "region": "West Midlands",
+        "nation": "England",
+        "corridor": "Birmingham and wider Midlands network",
+        "expected_completion": "phased programme",
+        "description": "Rail capacity and connectivity programme centred on Birmingham to improve services across the Midlands and beyond.",
+        "source_name": "Network Rail",
+        "source_key": "nr_midlands_rail_hub",
+        "last_checked": "2026-04-22"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [1.1000, 52.2500]
+      },
+      "properties": {
+        "id": "norwich-to-tilbury",
+        "name": "Norwich to Tilbury",
+        "category": "energy",
+        "subtype": "transmission_reinforcement",
+        "stage": "development",
+        "status_label": "Proposed reinforcement",
+        "promoter": "National Grid Electricity Transmission",
+        "region": "East of England",
+        "nation": "England",
+        "corridor": "Norwich-Bramford-Tilbury",
+        "expected_completion": "tbc",
+        "description": "New high-voltage electricity network reinforcement between Norwich, Bramford and Tilbury.",
+        "source_name": "National Grid",
+        "source_key": "ng_norwich_to_tilbury",
+        "last_checked": "2026-04-22"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [0.9310, 51.9630]
+      },
+      "properties": {
+        "id": "bramford-to-twinstead",
+        "name": "Bramford to Twinstead Reinforcement",
+        "category": "energy",
+        "subtype": "transmission_reinforcement",
+        "stage": "development",
+        "status_label": "Grid reinforcement project",
+        "promoter": "National Grid Electricity Transmission",
+        "region": "East of England",
+        "nation": "England",
+        "corridor": "Suffolk-Essex",
+        "expected_completion": "tbc",
+        "description": "Reinforcement between Bramford substation in Suffolk and Twinstead Tee in Essex using overhead line and underground cable.",
+        "source_name": "National Grid",
+        "source_key": "ng_bramford_to_twinstead",
+        "last_checked": "2026-04-22"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-1.8849, 52.4773]
+      },
+      "properties": {
+        "id": "hs2-phase-one-birmingham",
+        "name": "HS2 Phase One",
+        "category": "rail",
+        "subtype": "high_speed_rail",
+        "stage": "construction",
+        "status_label": "Main works ongoing",
+        "promoter": "HS2 Ltd",
+        "region": "West Midlands",
+        "nation": "England",
+        "corridor": "London-Birmingham",
+        "expected_completion": "tbc",
+        "description": "High-speed rail project with Phase One focused on the route between London and Birmingham.",
+        "source_name": "HS2 Ltd / UK Government",
+        "source_key": "hs2_phase_one",
+        "last_checked": "2026-04-22"
+      }
+    }
+  ]
+}
