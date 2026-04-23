@@ -132,9 +132,9 @@ export default function UkPopulationMap() {
 
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
-      style: 'mapbox://styles/mjb1000/cmo2vzo10008901s68c1yb3ty',
+      style: 'mapbox://styles/mjb1000/cmobea8tz007c01se73woccd1',
       center: [-2.5, 54.5],
-      zoom: 5
+      zoom: 10
     })
 
     mapRef.current = map
@@ -147,6 +147,17 @@ export default function UkPopulationMap() {
 
     map.on('load', async () => {
       map.fitBounds(ukBounds, { padding: 20 })
+
+     try {
+  await Promise.all([
+    loadMapImage(map, 'port-icon', '/port.png'),
+    loadMapImage(map, 'airport-icon', '/airport.png'),
+    loadMapImage(map, 'rail-icon', '/railer.png'),
+    loadMapImage(map, 'infrastructure-icon', '/i.png'),
+  ])
+} catch (error) {
+  console.error('Icon loading failed:', error)
+}
 
       try {
         const [
@@ -761,7 +772,7 @@ function addMotorwayJunctionsSourceAndLayer(
       type: 'circle',
       source: 'motorway-junctions',
       paint: {
-        'circle-radius': 4,
+        'circle-radius': 2,
         'circle-color': '#111827',
         'circle-stroke-color': '#ffffff',
         'circle-stroke-width': 1,
@@ -769,6 +780,26 @@ function addMotorwayJunctionsSourceAndLayer(
       }
     })
   }
+}
+
+
+function loadMapImage(map: mapboxgl.Map, name: string, url: string) {
+  return new Promise<void>((resolve, reject) => {
+    if (map.hasImage(name)) {
+      resolve()
+      return
+    }
+
+    map.loadImage(url, (error, image) => {
+      if (error || !image) {
+        reject(error || new Error(`Could not load ${url}`))
+        return
+      }
+
+      map.addImage(name, image)
+      resolve()
+    })
+  })
 }
 
 function addFreightHubsSourceAndLayer(
@@ -785,28 +816,19 @@ function addFreightHubsSourceAndLayer(
   if (!map.getLayer('freight-hubs-layer')) {
     map.addLayer({
       id: 'freight-hubs-layer',
-      type: 'circle',
+      type: 'symbol',
       source: 'freight-hubs',
-      paint: {
-        'circle-radius': [
+      layout: {
+        'icon-image': [
           'match',
           ['get', 'category'],
-          'port', 8,
-          'airport', 7,
-          'rail_terminal', 6,
-          6
+          'port', 'port-icon',
+          'airport', 'airport-icon',
+          'rail_terminal', 'rail-icon',
+          'default-icon'
         ],
-        'circle-color': [
-          'match',
-          ['get', 'category'],
-          'port', '#d97706',
-          'airport', '#dc2626',
-          'rail_terminal', '#059669',
-          '#6b7280'
-        ],
-        'circle-stroke-color': '#ffffff',
-        'circle-stroke-width': 1.5,
-        'circle-opacity': 0.95
+        'icon-size': 0.0425,
+        'icon-allow-overlap': false
       }
     })
   }
@@ -826,28 +848,12 @@ function addInfrastructureProjectsSourceAndLayer(
   if (!map.getLayer('infrastructure-projects-layer')) {
     map.addLayer({
       id: 'infrastructure-projects-layer',
-      type: 'circle',
+      type: 'symbol',
       source: 'infrastructure-projects',
-      paint: {
-        'circle-radius': [
-          'match',
-          ['get', 'category'],
-          'road', 8,
-          'rail', 8,
-          'energy', 8,
-          7
-        ],
-        'circle-color': [
-          'match',
-          ['get', 'category'],
-          'road', '#2563eb',
-          'rail', '#7c3aed',
-          'energy', '#dc2626',
-          '#6b7280'
-        ],
-        'circle-stroke-color': '#ffffff',
-        'circle-stroke-width': 1.75,
-        'circle-opacity': 0.95
+      layout: {
+        'icon-image': 'infrastructure-icon',
+        'icon-size': 0.035,
+        'icon-allow-overlap': true
       }
     })
   }

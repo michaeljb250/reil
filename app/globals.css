@@ -94,7 +94,7 @@ body {
   top: 18px;
   left: 18px;
   z-index: 10;
-  width: 390px;
+  width: 410px;
   max-width: calc(100vw - 24px);
   padding: 18px;
   border-radius: var(--radius-xl);
@@ -296,7 +296,7 @@ body {
 
 /* Popup */
 .mapboxgl-popup {
-  max-width: 300px;
+  max-width: 320px;
   font-size: 13px;
 }
 
@@ -392,8 +392,8 @@ body {
 .metrics-grid,
 .market-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
 }
 
 .metric-card,
@@ -429,6 +429,10 @@ body {
   letter-spacing: 0.08em;
   color: var(--text-muted);
   margin-bottom: 8px;
+}
+
+.data-tile--wide {
+  grid-column: 1 / -1;
 }
 
 .metric-card__value,
@@ -499,7 +503,7 @@ body {
 
 /* Popup richer formatting */
 .popup-card {
-  min-width: 220px;
+  min-width: 250px;
 }
 
 .popup-card__coords {
@@ -579,7 +583,7 @@ body {
   }
 
   .mapboxgl-popup {
-    max-width: 230px;
+    max-width: 250px;
     background: rgba(8, 14, 26, 0.96) !important;
   color: #040505 !important;
 
