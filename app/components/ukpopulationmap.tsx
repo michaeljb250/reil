@@ -72,12 +72,6 @@ type MotorwayJunctionProperties = {
   name?: string
 }
 
-type ScotlandPopulationProperties = {
-  DataZone?: string
-  Name?: string
-  TotPop2011?: number | string
-}
-
 type NearestMotorwayAnalysis = {
   point: GeoJSON.Feature<GeoJSON.Point>
   name: string
@@ -111,6 +105,7 @@ export default function UkPopulationMap() {
   const [searchText, setSearchText] = useState('')
   const [resultHtml, setResultHtml] = useState('Loading map...')
   const [isReady, setIsReady] = useState(false)
+  const [isKeyOpen, setIsKeyOpen] = useState(false)
 
   const populationGeoJSONRef = useRef<GeoJSON.FeatureCollection<GeoJSON.Point> | null>(null)
   const motorwayGeoJSONRef = useRef<GeoJSON.FeatureCollection<GeoJSON.Point> | null>(null)
@@ -132,9 +127,9 @@ export default function UkPopulationMap() {
 
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
-      style: 'mapbox://styles/mjb1000/cmobea8tz007c01se73woccd1',
+      style: 'mapbox://styles/mjb1000/cmobx92pt002l01pe1cii23u7',
       center: [-2.5, 54.5],
-      zoom: 10
+      zoom: 5
     })
 
     mapRef.current = map
@@ -147,17 +142,6 @@ export default function UkPopulationMap() {
 
     map.on('load', async () => {
       map.fitBounds(ukBounds, { padding: 20 })
-
-     try {
-  await Promise.all([
-    loadMapImage(map, 'port-icon', '/port.png'),
-    loadMapImage(map, 'airport-icon', '/airport.png'),
-    loadMapImage(map, 'rail-icon', '/railer.png'),
-    loadMapImage(map, 'infrastructure-icon', '/i.png'),
-  ])
-} catch (error) {
-  console.error('Icon loading failed:', error)
-}
 
       try {
         const [
@@ -289,19 +273,25 @@ export default function UkPopulationMap() {
     })
 
     map.on('click', async (e) => {
-      const clickedMotorwayJunction = map.queryRenderedFeatures(e.point, {
-        layers: ['motorway-junctions-layer']
-      })
+      const clickedMotorwayJunction = map.getLayer('motorway-junctions-layer')
+        ? map.queryRenderedFeatures(e.point, {
+            layers: ['motorway-junctions-layer']
+          })
+        : []
       if (clickedMotorwayJunction.length) return
 
-      const clickedFreightHub = map.queryRenderedFeatures(e.point, {
-        layers: ['freight-hubs-layer']
-      })
+      const clickedFreightHub = map.getLayer('freight-hubs-layer')
+        ? map.queryRenderedFeatures(e.point, {
+            layers: ['freight-hubs-layer']
+          })
+        : []
       if (clickedFreightHub.length) return
 
-      const clickedInfrastructureProject = map.queryRenderedFeatures(e.point, {
-        layers: ['infrastructure-projects-layer']
-      })
+      const clickedInfrastructureProject = map.getLayer('infrastructure-projects-layer')
+        ? map.queryRenderedFeatures(e.point, {
+            layers: ['infrastructure-projects-layer']
+          })
+        : []
       if (clickedInfrastructureProject.length) return
 
       if (
@@ -645,32 +635,91 @@ export default function UkPopulationMap() {
   }
 
   return (
-    <div className="map-page">
-      <div className="search-panel">
-        <input
-          type="text"
-          placeholder="Enter UK address or postcode"
-          autoComplete="off"
-          value={searchText}
-          onChange={(e) => setSearchText(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') handleSearch()
-          }}
-        />
-        <button onClick={handleSearch} disabled={!isReady}>
-          Search
-        </button>
-        <div id="result" dangerouslySetInnerHTML={{ __html: resultHtml }} />
+  <div className="map-page">
+    <header className="site-header">
+      <div className="site-header__brand">
+        UK Freight & Population Analysis
       </div>
 
-      <div ref={mapContainerRef} className="map-container" />
+      <button
+        className="site-header__key-button"
+        onClick={() => setIsKeyOpen((value) => !value)}
+      >
+        Map key & how it works
+      </button>
+
+      {isKeyOpen && (
+        <div className="site-header__dropdown">
+          <div className="key-section">
+            <strong>Map key</strong>
+
+            <div className="key-row">
+              <span className="key-dot key-dot--population" />
+              Population area points
+            </div>
+
+            <div className="key-row">
+              <span className="key-dot key-dot--motorway" />
+              Motorway junctions
+            </div>
+
+            <div className="key-row">
+              <span className="key-dot key-dot--port" />
+              Ports
+            </div>
+
+            <div className="key-row">
+              <span className="key-dot key-dot--airport" />
+              Airports
+            </div>
+
+            <div className="key-row">
+              <span className="key-dot key-dot--rail" />
+              Rail freight terminals
+            </div>
+
+            <div className="key-row">
+              <span className="key-dot key-dot--infrastructure" />
+              Major infrastructure projects
+            </div>
+          </div>
+
+          <div className="key-section">
+            <strong>How the site works</strong>
+            <p>
+              Search a UK address or postcode, or click anywhere on the map.
+              The tool calculates 30 and 60 minute drive-time areas, estimated
+              population reach, nearby freight hubs, nearest motorway access,
+              nearby infrastructure projects, and regional I&amp;L market data.
+            </p>
+          </div>
+        </div>
+      )}
+    </header>
+
+    <div className="search-panel">
+      <input
+        type="text"
+        placeholder="Enter UK address or postcode"
+        autoComplete="off"
+        value={searchText}
+        onChange={(e) => setSearchText(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') handleSearch()
+        }}
+      />
+      <button onClick={handleSearch} disabled={!isReady}>
+        Search
+      </button>
+      <div id="result" dangerouslySetInnerHTML={{ __html: resultHtml }} />
     </div>
-  )
+
+    <div ref={mapContainerRef} className="map-container" />
+  </div>
+)
 }
 
 function convertScotlandGeoJSONToPopulationRows(geojson: any): PopulationArea[] {
-  console.log('convertScotlandGeoJSONToPopulationRows input:', geojson)
-
   if (!geojson || !Array.isArray(geojson.features)) {
     console.error('Invalid Scotland GeoJSON:', geojson)
     return []
@@ -741,11 +790,11 @@ function addPopulationSourceAndLayer(
           ['linear'],
           ['get', 'population'],
           0, 3,
-          10000, 5,
-          25000, 7,
-          50000, 9,
-          100000, 12,
-          200000, 15
+          10000, 3,
+          25000, 5,
+          50000, 7,
+          100000, 10,
+          200000, 12
         ],
         'circle-opacity': 0.35,
         'circle-stroke-color': '#ffffff',
@@ -782,26 +831,6 @@ function addMotorwayJunctionsSourceAndLayer(
   }
 }
 
-
-function loadMapImage(map: mapboxgl.Map, name: string, url: string) {
-  return new Promise<void>((resolve, reject) => {
-    if (map.hasImage(name)) {
-      resolve()
-      return
-    }
-
-    map.loadImage(url, (error, image) => {
-      if (error || !image) {
-        reject(error || new Error(`Could not load ${url}`))
-        return
-      }
-
-      map.addImage(name, image)
-      resolve()
-    })
-  })
-}
-
 function addFreightHubsSourceAndLayer(
   map: mapboxgl.Map,
   freightHubsGeoJSON: GeoJSON.FeatureCollection<GeoJSON.Point>
@@ -816,19 +845,50 @@ function addFreightHubsSourceAndLayer(
   if (!map.getLayer('freight-hubs-layer')) {
     map.addLayer({
       id: 'freight-hubs-layer',
-      type: 'symbol',
+      type: 'circle',
       source: 'freight-hubs',
-      layout: {
-        'icon-image': [
+      paint: {
+        'circle-radius': [
           'match',
           ['get', 'category'],
-          'port', 'port-icon',
-          'airport', 'airport-icon',
-          'rail_terminal', 'rail-icon',
-          'default-icon'
+          'port', 8,
+          'airport', 7,
+          'rail_terminal', 6,
+          6
         ],
-        'icon-size': 0.0425,
-        'icon-allow-overlap': false
+        'circle-color': [
+          'match',
+          ['get', 'category'],
+          'port', '#061f7a',
+          'airport', '#64b9de',
+          'rail_terminal', '#059669',
+          '#6b7280'
+        ],
+        'circle-stroke-color': '#ffffff',
+        'circle-stroke-width': 1.5,
+        'circle-opacity': 0.95
+      }
+    })
+  }
+
+  if (!map.getLayer('freight-hubs-labels')) {
+    map.addLayer({
+      id: 'freight-hubs-labels',
+      type: 'symbol',
+      source: 'freight-hubs',
+      minzoom: 8,
+      layout: {
+        'text-field': ['coalesce', ['get', 'name'], ''],
+        'text-size': 11,
+        'text-offset': [0, -1.4],
+        'text-anchor': 'bottom',
+        'text-allow-overlap': false
+      },
+      paint: {
+        'text-color': '#ffffff',
+        'text-halo-color': 'rgba(8, 14, 26, 0.95)',
+        'text-halo-width': 1.5,
+        'text-halo-blur': 0.2
       }
     })
   }
@@ -848,12 +908,50 @@ function addInfrastructureProjectsSourceAndLayer(
   if (!map.getLayer('infrastructure-projects-layer')) {
     map.addLayer({
       id: 'infrastructure-projects-layer',
+      type: 'circle',
+      source: 'infrastructure-projects',
+      paint: {
+        'circle-radius': [
+          'match',
+          ['get', 'category'],
+          'road', 5,
+          'rail', 5,
+          'energy', 5,
+          6
+        ],
+        'circle-color': [
+          'match',
+          ['get', 'category'],
+          'road', '#181616',
+          'rail', '#181616',
+          'energy', '#181616',
+          '#6b7280'
+        ],
+        'circle-stroke-color': '#ffffff',
+        'circle-stroke-width': 1.5,
+        'circle-opacity': 0.95
+      }
+    })
+  }
+
+  if (!map.getLayer('infrastructure-projects-labels')) {
+    map.addLayer({
+      id: 'infrastructure-projects-labels',
       type: 'symbol',
       source: 'infrastructure-projects',
+      minzoom: 9,
       layout: {
-        'icon-image': 'infrastructure-icon',
-        'icon-size': 0.035,
-        'icon-allow-overlap': true
+        'text-field': ['coalesce', ['get', 'name'], ''],
+        'text-size': 11,
+        'text-offset': [0, -1.4],
+        'text-anchor': 'bottom',
+        'text-allow-overlap': false
+      },
+      paint: {
+        'text-color': '#ffffff',
+        'text-halo-color': 'rgba(8, 14, 26, 0.95)',
+        'text-halo-width': 1.5,
+        'text-halo-blur': 0.2
       }
     })
   }
@@ -1544,7 +1642,7 @@ function buildResultsHtml({
               <span class="data-tile__value">${projectsWithin50km}</span>
             </div>
 
-            <div class="data-tile">
+            <div class="data-tile data-tile--wide">
               <span class="data-tile__label">Nearest project</span>
               <span class="data-tile__value">${nearestProjectName}</span>
             </div>

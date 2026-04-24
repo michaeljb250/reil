@@ -5,192 +5,1186 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-2.0906, 51.8286]
+        "coordinates": [-1.8936, 52.4862]
       },
       "properties": {
-        "id": "a417-missing-link",
-        "name": "A417 Missing Link",
-        "category": "road",
-        "subtype": "strategic_road_upgrade",
+        "id": "hs2-high-speed-2",
+        "name": "HS2 (High Speed 2)",
+        "category": "rail",
+        "subtype": "high_speed_rail",
         "stage": "construction",
         "status_label": "Under construction",
-        "promoter": "National Highways",
-        "region": "South West",
+        "promoter": "HS2 Ltd",
+        "region": "London / West Midlands",
         "nation": "England",
-        "corridor": "A417 / M4-M5 connectivity",
-        "expected_completion": "2027",
-        "description": "Upgrade between Brockworth and Cowley to create a safer and more reliable link between the M4 and M5 corridors.",
-        "source_name": "National Highways",
-        "source_key": "nh_a417_missing_link",
-        "last_checked": "2026-04-22"
+        "corridor": "London Euston / Old Oak Common to Birmingham Curzon Street",
+        "expected_completion": "2033",
+        "description": "Britain's new high-speed railway, with opening services planned between Old Oak Common and Birmingham while the line to Euston is completed.",
+        "source_name": "HS2 Ltd",
+        "source_key": "hs2_project_update",
+        "last_checked": "2026-04-23"
       }
     },
     {
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [0.4402, 51.4842]
+        "coordinates": [-0.0745, 51.5186]
       },
       "properties": {
-        "id": "lower-thames-crossing",
-        "name": "Lower Thames Crossing",
-        "category": "road",
-        "subtype": "new_river_crossing",
-        "stage": "pre_construction",
-        "status_label": "Consent granted / early works",
-        "promoter": "National Highways",
-        "region": "South East",
+        "id": "elizabeth-line",
+        "name": "Elizabeth Line",
+        "category": "rail",
+        "subtype": "urban_rail",
+        "stage": "operational",
+        "status_label": "Operational",
+        "promoter": "Transport for London",
+        "region": "London",
         "nation": "England",
-        "corridor": "Kent-Essex Thames crossing",
-        "expected_completion": "early 2030s",
-        "description": "New road crossing intended to improve connectivity between Kent, Thurrock and Essex and reduce pressure on Dartford.",
-        "source_name": "National Highways",
-        "source_key": "nh_lower_thames_crossing",
-        "last_checked": "2026-04-22"
+        "corridor": "Reading / Heathrow - Central London - Shenfield / Abbey Wood",
+        "expected_completion": "Complete",
+        "description": "Cross-London railway now fully open, with service enhancements continuing through the 2026 timetable.",
+        "source_name": "Transport for London",
+        "source_key": "tfl_elizabeth_line",
+        "last_checked": "2026-04-23"
       }
     },
     {
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-1.7850, 53.6458]
+        "coordinates": [-1.5479, 53.7972]
+      },
+      "properties": {
+        "id": "northern-powerhouse-rail",
+        "name": "Northern Powerhouse Rail",
+        "category": "rail",
+        "subtype": "intercity_rail_upgrade",
+        "stage": "development",
+        "status_label": "In development",
+        "promoter": "Department for Transport",
+        "region": "North of England",
+        "nation": "England",
+        "corridor": "Liverpool - Manchester - Leeds - Bradford - Sheffield - York - Hull / Newcastle",
+        "expected_completion": "2030s",
+        "description": "Strategic rail programme intended to improve journey times and capacity across northern cities.",
+        "source_name": "UK Government",
+        "source_key": "northern_powerhouse_rail_2026",
+        "last_checked": "2026-04-23"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-1.7847, 53.6458]
       },
       "properties": {
         "id": "transpennine-route-upgrade",
         "name": "Transpennine Route Upgrade",
         "category": "rail",
-        "subtype": "rail_upgrade",
+        "subtype": "main_line_upgrade",
         "stage": "construction",
-        "status_label": "Long-term upgrade in delivery",
+        "status_label": "Under construction",
         "promoter": "Network Rail",
-        "region": "Yorkshire",
+        "region": "North of England",
         "nation": "England",
-        "corridor": "York-Leeds-Huddersfield-Manchester",
-        "expected_completion": "phased programme",
-        "description": "Major long-term upgrade to improve capacity, reliability and connectivity across the key trans-Pennine rail corridor.",
+        "corridor": "Manchester - Huddersfield - Leeds - York",
+        "expected_completion": "TBC",
+        "description": "Multi-billion-pound upgrade of the Transpennine main line to improve reliability, capacity and connectivity.",
         "source_name": "Network Rail",
-        "source_key": "nr_transpennine_route_upgrade",
-        "last_checked": "2026-04-22"
+        "source_key": "tru_network_rail",
+        "last_checked": "2026-04-23"
       }
     },
     {
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-0.7000, 52.0400]
+        "coordinates": [-0.7594, 52.0406]
       },
       "properties": {
         "id": "east-west-rail",
         "name": "East West Rail",
         "category": "rail",
-        "subtype": "new_rail_link",
-        "stage": "consultation",
-        "status_label": "Final route-wide consultation before DCO",
-        "promoter": "East West Rail Company",
-        "region": "South East",
+        "subtype": "strategic_rail_link",
+        "stage": "development",
+        "status_label": "In consultation / design development",
+        "promoter": "East West Railway Company",
+        "region": "South East / East of England",
         "nation": "England",
-        "corridor": "Oxford-Milton Keynes-Bedford-Cambridge",
-        "expected_completion": "phased / end of decade for Oxford-Bedford service",
-        "description": "New and upgraded rail connection linking Oxford, Milton Keynes, Bedford and Cambridge, with consultation ahead of a planned DCO submission.",
-        "source_name": "East West Rail / UK Government",
-        "source_key": "ewr_route_wide_consultation_2026",
-        "last_checked": "2026-04-22"
+        "corridor": "Oxford - Milton Keynes - Bedford - Cambridge",
+        "expected_completion": "Mid-to-late 2030s",
+        "description": "Programme to reconnect Oxford, Milton Keynes, Bedford and Cambridge, with the Bedford-Cambridge section progressing through consultation and design.",
+        "source_name": "East West Railway Company",
+        "source_key": "ewr_consultation_2026",
+        "last_checked": "2026-04-23"
       }
     },
     {
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-1.8904, 52.4862]
+        "coordinates": [-1.1460, 52.9225]
       },
       "properties": {
-        "id": "midlands-rail-hub",
-        "name": "Midlands Rail Hub",
+        "id": "midland-main-line-electrification",
+        "name": "Midland Main Line Electrification",
         "category": "rail",
-        "subtype": "rail_capacity_upgrade",
-        "stage": "development",
-        "status_label": "Programme development",
+        "subtype": "electrification",
+        "stage": "partial_construction",
+        "status_label": "Partially progressing",
         "promoter": "Network Rail",
+        "region": "East Midlands",
+        "nation": "England",
+        "corridor": "London St Pancras - Kettering - Wigston / Sheffield corridor",
+        "expected_completion": "TBC",
+        "description": "Electrification and upgrade works on the Midland Main Line, with some elements continuing while the wider programme remains partly paused.",
+        "source_name": "Network Rail",
+        "source_key": "mml_electrification",
+        "last_checked": "2026-04-23"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-1.2585, 51.7520]
+      },
+      "properties": {
+        "id": "great-western-electrification",
+        "name": "Great Western Electrification",
+        "category": "rail",
+        "subtype": "electrification",
+        "stage": "operational",
+        "status_label": "Operational / completed in core sections",
+        "promoter": "Network Rail",
+        "region": "London / South West / Wales",
+        "nation": "England / Wales",
+        "corridor": "London Paddington - Reading - Bristol / South Wales",
+        "expected_completion": "Core route complete",
+        "description": "Electrification of core Great Western Main Line sections now in operation, forming part of wider network modernisation.",
+        "source_name": "Network Rail",
+        "source_key": "great_western_electrification",
+        "last_checked": "2026-04-23"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-0.1337, 51.5282]
+      },
+      "properties": {
+        "id": "hs2-euston-station-redevelopment",
+        "name": "HS2 Euston Station Redevelopment",
+        "category": "rail",
+        "subtype": "station_redevelopment",
+        "stage": "pre_construction",
+        "status_label": "Restart / preparatory works",
+        "promoter": "HS2 Ltd",
+        "region": "London",
+        "nation": "England",
+        "corridor": "London Euston",
+        "expected_completion": "TBC",
+        "description": "Redevelopment and approach works for bringing HS2 into Euston, with preparatory and restarted works underway in 2026.",
+        "source_name": "HS2 Ltd",
+        "source_key": "euston_restart_2026",
+        "last_checked": "2026-04-23"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-2.2308, 53.4774]
+      },
+      "properties": {
+        "id": "manchester-piccadilly-upgrade",
+        "name": "Manchester Piccadilly Upgrade",
+        "category": "rail",
+        "subtype": "station_upgrade",
+        "stage": "development",
+        "status_label": "In development",
+        "promoter": "Department for Transport / Network Rail",
+        "region": "North West",
+        "nation": "England",
+        "corridor": "Manchester Piccadilly",
+        "expected_completion": "2030s",
+        "description": "Upgrade concept tied to wider northern rail investment, including future station and corridor capacity improvements at Manchester Piccadilly.",
+        "source_name": "UK Government",
+        "source_key": "manchester_piccadilly_npr",
+        "last_checked": "2026-04-23"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-1.5476, 53.7947]
+      },
+      "properties": {
+        "id": "leeds-station-upgrade",
+        "name": "Leeds Station Upgrade",
+        "category": "rail",
+        "subtype": "station_upgrade",
+        "stage": "construction",
+        "status_label": "Under construction / delivery",
+        "promoter": "Network Rail",
+        "region": "Yorkshire and the Humber",
+        "nation": "England",
+        "corridor": "Leeds City Station",
+        "expected_completion": "TBC",
+        "description": "Station capacity and access improvements at Leeds, including platform extension works to support longer and more frequent services.",
+        "source_name": "Network Rail",
+        "source_key": "leeds_station_upgrade",
+        "last_checked": "2026-04-23"
+      }
+    },{
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-2.5819, 51.4496] },
+      "properties": {
+        "id": "bristol-temple-meads-redevelopment",
+        "name": "Bristol Temple Meads Redevelopment",
+        "category": "rail",
+        "subtype": "station_redevelopment",
+        "stage": "development",
+        "status_label": "In development",
+        "promoter": "Network Rail / WECA",
+        "region": "South West",
+        "nation": "England",
+        "corridor": "Bristol Temple Meads",
+        "expected_completion": "2030s",
+        "description": "Major redevelopment of Bristol Temple Meads station and surrounding area to increase capacity and connectivity.",
+        "source_name": "Network Rail",
+        "source_key": "btm_redevelopment",
+        "last_checked": "2026-04-23"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-0.1703, 51.4642] },
+      "properties": {
+        "id": "clapham-junction-upgrade",
+        "name": "Clapham Junction Upgrade",
+        "category": "rail",
+        "subtype": "station_upgrade",
+        "stage": "development",
+        "status_label": "In development",
+        "promoter": "Network Rail",
+        "region": "London",
+        "nation": "England",
+        "corridor": "Clapham Junction",
+        "expected_completion": "TBC",
+        "description": "Capacity and accessibility upgrades at one of Europe’s busiest railway interchanges.",
+        "source_name": "Network Rail",
+        "source_key": "clapham_upgrade",
+        "last_checked": "2026-04-23"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-0.0133, 51.5033] },
+      "properties": {
+        "id": "dlr-extension",
+        "name": "Docklands Light Railway Extension",
+        "category": "rail",
+        "subtype": "light_rail_extension",
+        "stage": "planning",
+        "status_label": "Proposed",
+        "promoter": "Transport for London",
+        "region": "London",
+        "nation": "England",
+        "corridor": "Thamesmead / Beckton Riverside",
+        "expected_completion": "TBC",
+        "description": "Proposed extension of the DLR network to support housing and regeneration in East London.",
+        "source_name": "TfL",
+        "source_key": "dlr_extension_thamesmead",
+        "last_checked": "2026-04-23"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-1.8936, 52.4862] },
+      "properties": {
+        "id": "west-midlands-metro-expansion",
+        "name": "West Midlands Metro Expansion",
+        "category": "rail",
+        "subtype": "tram_extension",
+        "stage": "construction",
+        "status_label": "Under construction",
+        "promoter": "West Midlands Combined Authority",
         "region": "West Midlands",
         "nation": "England",
-        "corridor": "Birmingham and wider Midlands network",
-        "expected_completion": "phased programme",
-        "description": "Rail capacity and connectivity programme centred on Birmingham to improve services across the Midlands and beyond.",
-        "source_name": "Network Rail",
-        "source_key": "nr_midlands_rail_hub",
-        "last_checked": "2026-04-22"
+        "corridor": "Birmingham / Black Country",
+        "expected_completion": "Late 2020s",
+        "description": "Expansion of tram routes across Birmingham and surrounding areas.",
+        "source_name": "WMCA",
+        "source_key": "wm_metro_expansion",
+        "last_checked": "2026-04-23"
       }
     },
     {
       "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [1.1000, 52.2500]
-      },
+      "geometry": { "type": "Point", "coordinates": [-1.6178, 54.9783] },
       "properties": {
-        "id": "norwich-to-tilbury",
-        "name": "Norwich to Tilbury",
-        "category": "energy",
-        "subtype": "transmission_reinforcement",
-        "stage": "development",
-        "status_label": "Proposed reinforcement",
-        "promoter": "National Grid Electricity Transmission",
-        "region": "East of England",
-        "nation": "England",
-        "corridor": "Norwich-Bramford-Tilbury",
-        "expected_completion": "tbc",
-        "description": "New high-voltage electricity network reinforcement between Norwich, Bramford and Tilbury.",
-        "source_name": "National Grid",
-        "source_key": "ng_norwich_to_tilbury",
-        "last_checked": "2026-04-22"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [0.9310, 51.9630]
-      },
-      "properties": {
-        "id": "bramford-to-twinstead",
-        "name": "Bramford to Twinstead Reinforcement",
-        "category": "energy",
-        "subtype": "transmission_reinforcement",
-        "stage": "development",
-        "status_label": "Grid reinforcement project",
-        "promoter": "National Grid Electricity Transmission",
-        "region": "East of England",
-        "nation": "England",
-        "corridor": "Suffolk-Essex",
-        "expected_completion": "tbc",
-        "description": "Reinforcement between Bramford substation in Suffolk and Twinstead Tee in Essex using overhead line and underground cable.",
-        "source_name": "National Grid",
-        "source_key": "ng_bramford_to_twinstead",
-        "last_checked": "2026-04-22"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [-1.8849, 52.4773]
-      },
-      "properties": {
-        "id": "hs2-phase-one-birmingham",
-        "name": "HS2 Phase One",
+        "id": "tyne-wear-metro-modernisation",
+        "name": "Tyne and Wear Metro Modernisation",
         "category": "rail",
-        "subtype": "high_speed_rail",
+        "subtype": "metro_upgrade",
         "stage": "construction",
-        "status_label": "Main works ongoing",
+        "status_label": "Under delivery",
+        "promoter": "Nexus",
+        "region": "North East",
+        "nation": "England",
+        "corridor": "Newcastle / Sunderland",
+        "expected_completion": "Late 2020s",
+        "description": "Fleet replacement and infrastructure upgrades for the Tyne and Wear Metro.",
+        "source_name": "Nexus",
+        "source_key": "tw_metro_modernisation",
+        "last_checked": "2026-04-23"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-4.2518, 55.8642] },
+      "properties": {
+        "id": "glasgow-subway-modernisation",
+        "name": "Glasgow Subway Modernisation",
+        "category": "rail",
+        "subtype": "metro_upgrade",
+        "stage": "construction",
+        "status_label": "Under construction",
+        "promoter": "Strathclyde Partnership for Transport",
+        "region": "Scotland",
+        "nation": "Scotland",
+        "corridor": "Glasgow Subway",
+        "expected_completion": "Late 2020s",
+        "description": "Modernisation of rolling stock, signalling and stations on the Glasgow Subway.",
+        "source_name": "SPT",
+        "source_key": "glasgow_subway_mod",
+        "last_checked": "2026-04-23"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-3.1791, 51.4816] },
+      "properties": {
+        "id": "south-wales-metro",
+        "name": "South Wales Metro",
+        "category": "rail",
+        "subtype": "regional_rail_upgrade",
+        "stage": "construction",
+        "status_label": "Under construction",
+        "promoter": "Transport for Wales",
+        "region": "Wales",
+        "nation": "Wales",
+        "corridor": "Cardiff Valleys network",
+        "expected_completion": "Late 2020s",
+        "description": "Transformation of the South Wales rail network with electrification, new trains and increased frequency.",
+        "source_name": "TfW",
+        "source_key": "south_wales_metro",
+        "last_checked": "2026-04-23"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [0.1448, 52.1734] },
+      "properties": {
+        "id": "cambridge-south-station",
+        "name": "Cambridge South Station",
+        "category": "rail",
+        "subtype": "new_station",
+        "stage": "construction",
+        "status_label": "Under construction",
+        "promoter": "Network Rail",
+        "region": "East of England",
+        "nation": "England",
+        "corridor": "Cambridge Biomedical Campus",
+        "expected_completion": "2025",
+        "description": "New station serving the Cambridge Biomedical Campus and surrounding developments.",
+        "source_name": "Network Rail",
+        "source_key": "cambridge_south",
+        "last_checked": "2026-04-23"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-0.2590, 51.5319] },
+      "properties": {
+        "id": "old-oak-common-station",
+        "name": "Old Oak Common Station",
+        "category": "rail",
+        "subtype": "interchange_station",
+        "stage": "construction",
+        "status_label": "Under construction",
+        "promoter": "HS2 Ltd",
+        "region": "London",
+        "nation": "England",
+        "corridor": "HS2 / Elizabeth Line interchange",
+        "expected_completion": "2030",
+        "description": "Major interchange station connecting HS2 with the Elizabeth Line and Great Western Main Line.",
+        "source_name": "HS2 Ltd",
+        "source_key": "old_oak_common",
+        "last_checked": "2026-04-23"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-1.8936, 52.4862] },
+      "properties": {
+        "id": "birmingham-curzon-street",
+        "name": "Birmingham Curzon Street Station",
+        "category": "rail",
+        "subtype": "high_speed_station",
+        "stage": "construction",
+        "status_label": "Under construction",
         "promoter": "HS2 Ltd",
         "region": "West Midlands",
         "nation": "England",
-        "corridor": "London-Birmingham",
-        "expected_completion": "tbc",
-        "description": "High-speed rail project with Phase One focused on the route between London and Birmingham.",
-        "source_name": "HS2 Ltd / UK Government",
-        "source_key": "hs2_phase_one",
-        "last_checked": "2026-04-22"
+        "corridor": "HS2",
+        "expected_completion": "2033",
+        "description": "New high-speed rail terminus in Birmingham forming part of HS2 Phase One.",
+        "source_name": "HS2 Ltd",
+        "source_key": "curzon_street",
+        "last_checked": "2026-04-23"
+      }
+    },{
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [0.4786, 51.4896]
+      },
+      "properties": {
+        "id": "lower-thames-crossing",
+        "name": "Lower Thames Crossing",
+        "category": "road",
+        "subtype": "road_tunnel_crossing",
+        "stage": "early_works",
+        "status_label": "Early works underway",
+        "promoter": "National Highways",
+        "region": "South East",
+        "nation": "England",
+        "corridor": "A2 / M2 to M25 via new Thames crossing",
+        "expected_completion": "Early 2030s",
+        "description": "New road crossing east of London intended to reduce pressure on the Dartford Crossing and improve strategic connectivity between Kent and Essex.",
+        "source_name": "National Highways",
+        "source_key": "nh_lower_thames_crossing",
+        "last_checked": "2026-04-23"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-1.8262, 51.1789]
+      },
+      "properties": {
+        "id": "a303-stonehenge-tunnel",
+        "name": "A303 Stonehenge Tunnel",
+        "category": "road",
+        "subtype": "strategic_road_tunnel",
+        "stage": "cancelled",
+        "status_label": "Cancelled",
+        "promoter": "National Highways",
+        "region": "South West",
+        "nation": "England",
+        "corridor": "A303 Amesbury to Berwick Down",
+        "expected_completion": "Cancelled",
+        "description": "Proposed A303 tunnel and bypass package near Stonehenge intended to improve journey reliability and remove surface traffic from the World Heritage Site setting.",
+        "source_name": "UK Government / National Highways",
+        "source_key": "a303_amesbury_berwick_down",
+        "last_checked": "2026-04-23"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-2.7449, 54.6648]
+      },
+      "properties": {
+        "id": "a66-northern-trans-pennine-upgrade",
+        "name": "A66 Northern Trans-Pennine Upgrade",
+        "category": "road",
+        "subtype": "strategic_road_upgrade",
+        "stage": "pre_construction",
+        "status_label": "Approved / pre-construction",
+        "promoter": "National Highways",
+        "region": "North West / North East",
+        "nation": "England",
+        "corridor": "M6 at Penrith to A1(M) at Scotch Corner",
+        "expected_completion": "Early 2030s",
+        "description": "Programme to dual remaining single-carriageway sections and improve junctions along the A66 between Penrith and Scotch Corner.",
+        "source_name": "National Highways",
+        "source_key": "nh_a66_northern_trans_pennine",
+        "last_checked": "2026-04-23"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-1.6906, 55.1740]
+      },
+      "properties": {
+        "id": "a1-northumberland-upgrade",
+        "name": "A1 Northumberland Upgrade",
+        "category": "road",
+        "subtype": "strategic_road_dualling",
+        "stage": "cancelled",
+        "status_label": "Cancelled",
+        "promoter": "National Highways",
+        "region": "North East",
+        "nation": "England",
+        "corridor": "A1 Morpeth to Ellingham",
+        "expected_completion": "Cancelled",
+        "description": "Proposed dualling of sections of the A1 in Northumberland to create a more continuous high-quality route north of Newcastle.",
+        "source_name": "National Highways",
+        "source_key": "a1_morpeth_to_ellingham",
+        "last_checked": "2026-04-23"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-0.4698, 51.3385]
+      },
+      "properties": {
+        "id": "m25-junction-improvements-programme",
+        "name": "M25 Junction Improvements Programme",
+        "category": "road",
+        "subtype": "junction_upgrade_programme",
+        "stage": "construction",
+        "status_label": "Under construction",
+        "promoter": "National Highways",
+        "region": "South East",
+        "nation": "England",
+        "corridor": "Representative point: M25 Junction 10 (A3 Wisley Interchange)",
+        "expected_completion": "2026",
+        "description": "Programme of capacity and safety improvements at key M25 junctions, represented here by the major Junction 10 upgrade at Wisley.",
+        "source_name": "National Highways",
+        "source_key": "m25_junction_10_programme_rep",
+        "last_checked": "2026-04-23"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [0.0104, 51.4979]
+      },
+      "properties": {
+        "id": "silvertown-tunnel",
+        "name": "Silvertown Tunnel",
+        "category": "road",
+        "subtype": "road_tunnel",
+        "stage": "operational",
+        "status_label": "Operational",
+        "promoter": "Transport for London",
+        "region": "London",
+        "nation": "England",
+        "corridor": "Silvertown to Greenwich Peninsula",
+        "expected_completion": "Complete",
+        "description": "New road tunnel under the Thames in east London providing an alternative to the Blackwall Tunnel and supporting additional cross-river bus services.",
+        "source_name": "Transport for London",
+        "source_key": "tfl_silvertown_tunnel",
+        "last_checked": "2026-04-23"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [0.0107, 51.4975]
+      },
+      "properties": {
+        "id": "blackwall-tunnel-refurbishment",
+        "name": "Blackwall Tunnel Refurbishment",
+        "category": "road",
+        "subtype": "tunnel_maintenance_upgrade",
+        "stage": "maintenance",
+        "status_label": "Ongoing maintenance",
+        "promoter": "Transport for London",
+        "region": "London",
+        "nation": "England",
+        "corridor": "Blackwall Tunnel",
+        "expected_completion": "Ongoing",
+        "description": "Essential maintenance and repair works to the Blackwall Tunnel, supported operationally by the opening of the Silvertown Tunnel.",
+        "source_name": "Transport for London",
+        "source_key": "tfl_blackwall_tunnel_maintenance",
+        "last_checked": "2026-04-23"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-2.5753, 51.5139]
+      },
+      "properties": {
+        "id": "m4-smart-motorway-programme",
+        "name": "M4 Smart Motorway Programme",
+        "category": "road",
+        "subtype": "smart_motorway",
+        "stage": "cancelled",
+        "status_label": "Programme cancelled",
+        "promoter": "National Highways",
+        "region": "South West / South East",
+        "nation": "England",
+        "corridor": "Representative point: M4 Junctions 19 to 20",
+        "expected_completion": "Cancelled",
+        "description": "Smart motorway expansion on the M4 formed part of the wider National Highways smart motorway programme, which has since been cancelled.",
+        "source_name": "National Highways / ORR",
+        "source_key": "m4_smart_motorway_programme",
+        "last_checked": "2026-04-23"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-2.7136, 54.2986]
+      },
+      "properties": {
+        "id": "m6-junction-upgrades",
+        "name": "M6 Junction Upgrades",
+        "category": "road",
+        "subtype": "motorway_corridor_upgrades",
+        "stage": "construction",
+        "status_label": "Under way",
+        "promoter": "National Highways",
+        "region": "North West",
+        "nation": "England",
+        "corridor": "Representative point: M6 corridor, junctions 34 to 40",
+        "expected_completion": "2031",
+        "description": "Ongoing package of improvement, drainage, resurfacing and resilience works across the M6 corridor, used here as the representative current M6 upgrade entry.",
+        "source_name": "National Highways",
+        "source_key": "nh_m6_corridor_upgrades",
+        "last_checked": "2026-04-23"
+      }
+    }, {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-0.4543, 51.4700] },
+      "properties": {
+        "id": "heathrow-third-runway",
+        "name": "Heathrow Third Runway",
+        "category": "aviation",
+        "subtype": "airport_expansion",
+        "stage": "planning",
+        "status_label": "Proposed",
+        "promoter": "Heathrow Airport Ltd",
+        "region": "London",
+        "nation": "England",
+        "corridor": "Heathrow Airport",
+        "expected_completion": "TBC",
+        "description": "Proposed third runway and associated expansion to increase capacity at Heathrow Airport.",
+        "source_name": "DfT",
+        "source_key": "heathrow_r3",
+        "last_checked": "2026-04-23"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-0.1821, 51.1537] },
+      "properties": {
+        "id": "gatwick-airport-expansion",
+        "name": "Gatwick Airport Expansion",
+        "category": "aviation",
+        "subtype": "runway_upgrade",
+        "stage": "planning",
+        "status_label": "In planning",
+        "promoter": "Gatwick Airport Ltd",
+        "region": "South East",
+        "nation": "England",
+        "corridor": "Gatwick Airport",
+        "expected_completion": "Early 2030s",
+        "description": "Plan to bring Gatwick’s standby runway into routine use alongside the main runway.",
+        "source_name": "Gatwick Airport",
+        "source_key": "gatwick_second_runway",
+        "last_checked": "2026-04-23"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-2.2749, 53.3537] },
+      "properties": {
+        "id": "manchester-airport-transformation",
+        "name": "Manchester Airport Transformation Programme",
+        "category": "aviation",
+        "subtype": "airport_upgrade",
+        "stage": "construction",
+        "status_label": "Under construction",
+        "promoter": "Manchester Airports Group",
+        "region": "North West",
+        "nation": "England",
+        "corridor": "Manchester Airport",
+        "expected_completion": "Late 2020s",
+        "description": "Major redevelopment of terminals and airfield infrastructure at Manchester Airport.",
+        "source_name": "MAG",
+        "source_key": "manchester_airport_transformation",
+        "last_checked": "2026-04-23"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-0.3683, 51.8747] },
+      "properties": {
+        "id": "luton-airport-expansion",
+        "name": "Luton Airport Expansion",
+        "category": "aviation",
+        "subtype": "airport_expansion",
+        "stage": "planning",
+        "status_label": "In planning",
+        "promoter": "London Luton Airport Ltd",
+        "region": "East of England",
+        "nation": "England",
+        "corridor": "Luton Airport",
+        "expected_completion": "Early 2030s",
+        "description": "Expansion proposals to significantly increase passenger capacity at London Luton Airport.",
+        "source_name": "LLA",
+        "source_key": "luton_expansion",
+        "last_checked": "2026-04-23"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-2.7191, 51.3827] },
+      "properties": {
+        "id": "bristol-airport-expansion",
+        "name": "Bristol Airport Expansion",
+        "category": "aviation",
+        "subtype": "airport_expansion",
+        "stage": "construction",
+        "status_label": "Under construction",
+        "promoter": "Bristol Airport Ltd",
+        "region": "South West",
+        "nation": "England",
+        "corridor": "Bristol Airport",
+        "expected_completion": "Late 2020s",
+        "description": "Ongoing expansion works to increase capacity and improve passenger facilities at Bristol Airport.",
+        "source_name": "Bristol Airport",
+        "source_key": "bristol_airport_expansion",
+        "last_checked": "2026-04-23"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.3132, 51.9630] },
+      "properties": {
+        "id": "felixstowe-port-expansion",
+        "name": "Felixstowe Port Expansion",
+        "category": "port",
+        "subtype": "container_port_expansion",
+        "stage": "development",
+        "status_label": "In development",
+        "promoter": "Hutchison Ports",
+        "region": "East of England",
+        "nation": "England",
+        "corridor": "Port of Felixstowe",
+        "expected_completion": "Late 2020s",
+        "description": "Expansion and efficiency improvements at the UK’s largest container port.",
+        "source_name": "Hutchison Ports",
+        "source_key": "felixstowe_expansion",
+        "last_checked": "2026-04-23"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-2.9916, 53.4084] },
+      "properties": {
+        "id": "liverpool-superport",
+        "name": "Liverpool SuperPort",
+        "category": "port",
+        "subtype": "logistics_hub",
+        "stage": "development",
+        "status_label": "Ongoing development",
+        "promoter": "Peel Ports",
+        "region": "North West",
+        "nation": "England",
+        "corridor": "Liverpool City Region",
+        "expected_completion": "Ongoing",
+        "description": "Integrated port, logistics and industrial cluster centred on the Port of Liverpool.",
+        "source_name": "Peel Ports",
+        "source_key": "liverpool_superport",
+        "last_checked": "2026-04-23"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-1.4520, 54.9980] },
+      "properties": {
+        "id": "port-of-tyne-expansion",
+        "name": "Port of Tyne Expansion",
+        "category": "port",
+        "subtype": "port_upgrade",
+        "stage": "development",
+        "status_label": "In development",
+        "promoter": "Port of Tyne",
+        "region": "North East",
+        "nation": "England",
+        "corridor": "River Tyne",
+        "expected_completion": "Late 2020s",
+        "description": "Programme of port upgrades and investments to support offshore, logistics and clean energy growth.",
+        "source_name": "Port of Tyne",
+        "source_key": "tyne_expansion",
+        "last_checked": "2026-04-23"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-3.1330, 51.5390] },
+      "properties": {
+        "id": "hinkley-point-c",
+        "name": "Hinkley Point C",
+        "category": "energy",
+        "subtype": "nuclear",
+        "stage": "construction",
+        "status_label": "Under construction",
+        "promoter": "EDF Energy",
+        "region": "South West",
+        "nation": "England",
+        "corridor": "Somerset coast",
+        "expected_completion": "Early 2030s",
+        "description": "New nuclear power station providing low-carbon electricity generation.",
+        "source_name": "EDF",
+        "source_key": "hinkley_point_c",
+        "last_checked": "2026-04-23"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.3130, 52.2130] },
+      "properties": {
+        "id": "sizewell-c",
+        "name": "Sizewell C",
+        "category": "energy",
+        "subtype": "nuclear",
+        "stage": "pre_construction",
+        "status_label": "Approved / early works",
+        "promoter": "EDF Energy / UK Government",
+        "region": "East of England",
+        "nation": "England",
+        "corridor": "Suffolk coast",
+        "expected_completion": "Mid 2030s",
+        "description": "Planned nuclear power station adjacent to Sizewell B to support long-term energy security.",
+        "source_name": "UK Government",
+        "source_key": "sizewell_c",
+        "last_checked": "2026-04-23"
+      }
+    }, {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-1.6178, 54.9783] },
+      "properties": {
+        "id": "rolls-royce-smr-programme",
+        "name": "Rolls-Royce SMR Programme",
+        "category": "energy",
+        "subtype": "small_modular_reactor",
+        "stage": "development",
+        "status_label": "In development",
+        "promoter": "Rolls-Royce SMR Ltd",
+        "region": "UK-wide",
+        "nation": "UK",
+        "corridor": "Multiple potential sites",
+        "expected_completion": "Early 2030s",
+        "description": "Development of a fleet of small modular nuclear reactors to support low-carbon electricity generation.",
+        "source_name": "Rolls-Royce SMR",
+        "source_key": "rr_smr_programme",
+        "last_checked": "2026-04-23"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-1.8904, 52.4862] },
+      "properties": {
+        "id": "great-grid-upgrade",
+        "name": "National Grid Great Grid Upgrade",
+        "category": "energy",
+        "subtype": "grid_upgrade",
+        "stage": "construction",
+        "status_label": "Under construction",
+        "promoter": "National Grid",
+        "region": "UK-wide",
+        "nation": "UK",
+        "corridor": "Multiple transmission corridors",
+        "expected_completion": "2030s",
+        "description": "Major programme to expand and reinforce the UK’s electricity transmission network.",
+        "source_name": "National Grid",
+        "source_key": "great_grid_upgrade",
+        "last_checked": "2026-04-23"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-0.0300, 51.5079] },
+      "properties": {
+        "id": "thames-tideway-tunnel",
+        "name": "Thames Tideway Tunnel",
+        "category": "water",
+        "subtype": "sewer_tunnel",
+        "stage": "construction",
+        "status_label": "Near completion",
+        "promoter": "Tideway",
+        "region": "London",
+        "nation": "England",
+        "corridor": "River Thames",
+        "expected_completion": "2026",
+        "description": "Major sewer tunnel designed to reduce sewage overflows into the River Thames.",
+        "source_name": "Tideway",
+        "source_key": "tideway",
+        "last_checked": "2026-04-23"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-0.1000, 51.5000] },
+      "properties": {
+        "id": "thames-flood-defences-upgrade",
+        "name": "River Thames Flood Defences Upgrade",
+        "category": "water",
+        "subtype": "flood_defence",
+        "stage": "development",
+        "status_label": "In development",
+        "promoter": "Environment Agency",
+        "region": "London / South East",
+        "nation": "England",
+        "corridor": "River Thames",
+        "expected_completion": "2030s",
+        "description": "Programme to upgrade and extend flood defences along the Thames in response to climate risks.",
+        "source_name": "Environment Agency",
+        "source_key": "thames_flood_upgrade",
+        "last_checked": "2026-04-23"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [0.3000, 52.4000] },
+      "properties": {
+        "id": "fens-reservoir-project",
+        "name": "Fens Reservoir Project",
+        "category": "water",
+        "subtype": "reservoir",
+        "stage": "planning",
+        "status_label": "Proposed",
+        "promoter": "Anglian Water",
+        "region": "East of England",
+        "nation": "England",
+        "corridor": "Cambridgeshire Fens",
+        "expected_completion": "2030s",
+        "description": "Proposed large reservoir to improve water supply resilience in the East of England.",
+        "source_name": "Anglian Water",
+        "source_key": "fens_reservoir",
+        "last_checked": "2026-04-23"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-1.2000, 50.9000] },
+      "properties": {
+        "id": "havant-thicket-reservoir",
+        "name": "Havant Thicket Reservoir",
+        "category": "water",
+        "subtype": "reservoir",
+        "stage": "construction",
+        "status_label": "Under construction",
+        "promoter": "Portsmouth Water",
+        "region": "South East",
+        "nation": "England",
+        "corridor": "Hampshire",
+        "expected_completion": "2029",
+        "description": "New reservoir to support long-term water supply resilience in southern England.",
+        "source_name": "Portsmouth Water",
+        "source_key": "havant_thicket",
+        "last_checked": "2026-04-23"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-2.5000, 53.0000] },
+      "properties": {
+        "id": "united-utilities-storm-overflow-programme",
+        "name": "United Utilities Storm Overflow Programme",
+        "category": "water",
+        "subtype": "wastewater_upgrade",
+        "stage": "construction",
+        "status_label": "Under way",
+        "promoter": "United Utilities",
+        "region": "North West",
+        "nation": "England",
+        "corridor": "Multiple sites",
+        "expected_completion": "2030s",
+        "description": "Programme of wastewater network upgrades to reduce storm overflows and improve water quality.",
+        "source_name": "United Utilities",
+        "source_key": "uu_storm_overflow",
+        "last_checked": "2026-04-23"
+      }
+    },  {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-0.2590, 51.5319] },
+      "properties": {
+        "id": "old-oak-common-regeneration",
+        "name": "Old Oak Common Regeneration",
+        "category": "regeneration",
+        "subtype": "mixed_use_development",
+        "stage": "construction",
+        "status_label": "Under construction",
+        "promoter": "OPDC / GLA",
+        "region": "London",
+        "nation": "England",
+        "corridor": "Old Oak / Park Royal",
+        "expected_completion": "2030s",
+        "description": "Major regeneration area anchored by the new HS2 and Elizabeth Line interchange at Old Oak Common.",
+        "source_name": "Old Oak and Park Royal Development Corporation",
+        "source_key": "old_oak_common_regen",
+        "last_checked": "2026-04-23"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-0.1426, 51.4816] },
+      "properties": {
+        "id": "battersea-power-station-redevelopment",
+        "name": "Battersea Power Station Redevelopment",
+        "category": "regeneration",
+        "subtype": "mixed_use_development",
+        "stage": "operational",
+        "status_label": "Operational / ongoing phases",
+        "promoter": "Battersea Power Station Development Company",
+        "region": "London",
+        "nation": "England",
+        "corridor": "Nine Elms",
+        "expected_completion": "Ongoing",
+        "description": "Large-scale redevelopment of the former power station site into residential, retail and commercial space.",
+        "source_name": "BPSDC",
+        "source_key": "battersea_regen",
+        "last_checked": "2026-04-23"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-0.0235, 51.5054] },
+      "properties": {
+        "id": "canary-wharf-expansion",
+        "name": "Canary Wharf Expansion",
+        "category": "regeneration",
+        "subtype": "commercial_district_expansion",
+        "stage": "development",
+        "status_label": "Ongoing development",
+        "promoter": "Canary Wharf Group",
+        "region": "London",
+        "nation": "England",
+        "corridor": "Canary Wharf",
+        "expected_completion": "Ongoing",
+        "description": "Continued expansion of Canary Wharf with mixed-use commercial, residential and life sciences developments.",
+        "source_name": "Canary Wharf Group",
+        "source_key": "canary_wharf_expansion",
+        "last_checked": "2026-04-23"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-0.1230, 51.5308] },
+      "properties": {
+        "id": "kings-cross-redevelopment",
+        "name": "King’s Cross Redevelopment",
+        "category": "regeneration",
+        "subtype": "urban_regeneration",
+        "stage": "operational",
+        "status_label": "Largely complete / ongoing phases",
+        "promoter": "Argent LLP",
+        "region": "London",
+        "nation": "England",
+        "corridor": "King’s Cross",
+        "expected_completion": "Ongoing",
+        "description": "Transformation of former railway lands into a major mixed-use district with offices, housing and public space.",
+        "source_name": "Argent",
+        "source_key": "kings_cross_regen",
+        "last_checked": "2026-04-23"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [0.1100, 51.5010] },
+      "properties": {
+        "id": "thamesmead-waterfront",
+        "name": "Thamesmead Waterfront",
+        "category": "regeneration",
+        "subtype": "housing_infrastructure",
+        "stage": "planning",
+        "status_label": "Proposed",
+        "promoter": "Peabody / Lendlease",
+        "region": "London",
+        "nation": "England",
+        "corridor": "Thamesmead",
+        "expected_completion": "2030s",
+        "description": "Major housing and infrastructure-led regeneration scheme in Thamesmead supported by new transport links.",
+        "source_name": "Peabody",
+        "source_key": "thamesmead_waterfront",
+        "last_checked": "2026-04-23"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-1.7594, 53.7950] },
+      "properties": {
+        "id": "bradford-city-centre-regeneration",
+        "name": "Bradford City Centre Regeneration",
+        "category": "regeneration",
+        "subtype": "urban_regeneration",
+        "stage": "construction",
+        "status_label": "Under way",
+        "promoter": "Bradford Council",
+        "region": "Yorkshire and the Humber",
+        "nation": "England",
+        "corridor": "Bradford City Centre",
+        "expected_completion": "Late 2020s",
+        "description": "Programme of regeneration including public realm, transport and commercial redevelopment in Bradford.",
+        "source_name": "Bradford Council",
+        "source_key": "bradford_regen",
+        "last_checked": "2026-04-23"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-2.2500, 53.5300] },
+      "properties": {
+        "id": "manchester-northern-gateway",
+        "name": "Manchester Northern Gateway",
+        "category": "regeneration",
+        "subtype": "housing_growth_area",
+        "stage": "construction",
+        "status_label": "Under way",
+        "promoter": "Manchester City Council / Far East Consortium",
+        "region": "North West",
+        "nation": "England",
+        "corridor": "North Manchester",
+        "expected_completion": "2030s",
+        "description": "Large-scale housing-led regeneration programme delivering new neighbourhoods in North Manchester.",
+        "source_name": "Manchester City Council",
+        "source_key": "northern_gateway",
+        "last_checked": "2026-04-23"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-4.2500, 55.8600] },
+      "properties": {
+        "id": "glasgow-river-clyde-regeneration",
+        "name": "Glasgow River Clyde Regeneration",
+        "category": "regeneration",
+        "subtype": "waterfront_regeneration",
+        "stage": "development",
+        "status_label": "Ongoing development",
+        "promoter": "Glasgow City Council",
+        "region": "Scotland",
+        "nation": "Scotland",
+        "corridor": "River Clyde",
+        "expected_completion": "Ongoing",
+        "description": "Long-term regeneration of the River Clyde waterfront with residential, commercial and infrastructure investment.",
+        "source_name": "Glasgow City Council",
+        "source_key": "clyde_regeneration",
+        "last_checked": "2026-04-23"
       }
     }
   ]
