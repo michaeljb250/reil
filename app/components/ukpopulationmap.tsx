@@ -39,11 +39,8 @@ type MarketRow = {
 type FreightHubProperties = {
   name?: string
   category?: string
-  subtype?: string
   region?: string
   nation?: string
-  operator?: string
-  corridor?: string
 }
 
 type InfrastructureProjectProperties = {
@@ -514,12 +511,8 @@ export default function UkPopulationMap() {
   ) {
     const name = properties?.name || 'Unknown freight hub'
     const category = properties?.category || 'N/A'
-    const subtype = properties?.subtype || 'N/A'
     const region = properties?.region || 'N/A'
     const nation = properties?.nation || 'N/A'
-    const operator = properties?.operator || 'N/A'
-    const corridor = properties?.corridor || 'N/A'
-
     activePopupRef.current?.remove()
     activePopupRef.current = new mapboxgl.Popup()
       .setLngLat(coordinates)
@@ -533,10 +526,6 @@ export default function UkPopulationMap() {
             <strong>${String(category).replace(/_/g, ' ')}</strong>
           </div>
 
-          <div class="popup-line">
-            <span>Subtype</span>
-            <strong>${String(subtype).replace(/_/g, ' ')}</strong>
-          </div>
 
           <div class="popup-line">
             <span>Region</span>
@@ -546,16 +535,6 @@ export default function UkPopulationMap() {
           <div class="popup-line">
             <span>Nation</span>
             <strong>${nation}</strong>
-          </div>
-
-          <div class="popup-line">
-            <span>Operator</span>
-            <strong>${operator}</strong>
-          </div>
-
-          <div class="popup-line">
-            <span>Corridor</span>
-            <strong>${corridor}</strong>
           </div>
         </div>
       `)
@@ -570,11 +549,7 @@ export default function UkPopulationMap() {
     const name = properties?.name || 'Unknown project'
     const category = properties?.category || 'N/A'
     const subtype = properties?.subtype || 'N/A'
-    const stage = properties?.stage || 'N/A'
-    const statusLabel = properties?.status_label || 'N/A'
-    const promoter = properties?.promoter || 'N/A'
-    const region = properties?.region || 'N/A'
-    const expectedCompletion = properties?.expected_completion || 'N/A'
+
 
     activePopupRef.current?.remove()
     activePopupRef.current = new mapboxgl.Popup()
@@ -592,31 +567,6 @@ export default function UkPopulationMap() {
           <div class="popup-line">
             <span>Subtype</span>
             <strong>${String(subtype).replace(/_/g, ' ')}</strong>
-          </div>
-
-          <div class="popup-line">
-            <span>Stage</span>
-            <strong>${String(stage).replace(/_/g, ' ')}</strong>
-          </div>
-
-          <div class="popup-line">
-            <span>Status</span>
-            <strong>${statusLabel}</strong>
-          </div>
-
-          <div class="popup-line">
-            <span>Promoter</span>
-            <strong>${promoter}</strong>
-          </div>
-
-          <div class="popup-line">
-            <span>Region</span>
-            <strong>${region}</strong>
-          </div>
-
-          <div class="popup-line">
-            <span>Expected completion</span>
-            <strong>${expectedCompletion}</strong>
           </div>
         </div>
       `)
@@ -1369,11 +1319,9 @@ function buildMotorwayJunctionSidebarHtml(properties: MotorwayJunctionProperties
 function buildFreightHubSidebarHtml(properties: FreightHubProperties) {
   const name = properties?.name || 'Unknown freight hub'
   const category = properties?.category || 'N/A'
-  const subtype = properties?.subtype || 'N/A'
   const region = properties?.region || 'N/A'
   const nation = properties?.nation || 'N/A'
-  const operator = properties?.operator || 'N/A'
-  const corridor = properties?.corridor || 'N/A'
+
 
   return `
     <div class="results-shell">
@@ -1382,7 +1330,6 @@ function buildFreightHubSidebarHtml(properties: FreightHubProperties) {
         <div class="hero-card__title">${name}</div>
         <div class="hero-card__meta">
           <span class="hero-chip">${String(category).replace(/_/g, ' ')}</span>
-          <span class="hero-chip">${String(subtype).replace(/_/g, ' ')}</span>
           <span class="hero-chip">${region}</span>
         </div>
       </div>
@@ -1400,10 +1347,6 @@ function buildFreightHubSidebarHtml(properties: FreightHubProperties) {
             <span class="data-tile__value">${String(category).replace(/_/g, ' ')}</span>
           </div>
 
-          <div class="data-tile">
-            <span class="data-tile__label">Subtype</span>
-            <span class="data-tile__value">${String(subtype).replace(/_/g, ' ')}</span>
-          </div>
 
           <div class="data-tile">
             <span class="data-tile__label">Region</span>
@@ -1415,15 +1358,7 @@ function buildFreightHubSidebarHtml(properties: FreightHubProperties) {
             <span class="data-tile__value">${nation}</span>
           </div>
 
-          <div class="data-tile">
-            <span class="data-tile__label">Operator</span>
-            <span class="data-tile__value">${operator}</span>
-          </div>
 
-          <div class="data-tile">
-            <span class="data-tile__label">Corridor</span>
-            <span class="data-tile__value">${corridor}</span>
-          </div>
         </div>
       </div>
     </div>
